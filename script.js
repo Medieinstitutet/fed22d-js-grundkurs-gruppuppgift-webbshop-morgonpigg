@@ -333,21 +333,37 @@ function nextImageBtn(e) {
 
 // Function that swaps images to the Next image
 function nextImage(nxtBtn) {
-  const donutImg1 = document.querySelectorAll(`.donutImg-1-${nxtBtn}`);
-  const donutImg2 = document.querySelectorAll(`.donutImg-2-${nxtBtn}`);
+  const donutImg1 = document.querySelector(`.donutImg-1-${nxtBtn}`);
+  const donutImg2 = document.querySelector(`.donutImg-2-${nxtBtn}`);
 
-  console.log(donutImg1);
+  // Kolla om style-attributet är satt, eller om det är tomt
+  let donutImg1Opacity = donutImg1.style.opacity;
+  let donutImg2Opacity = donutImg2.style.opacity;
 
-  if (donutImg2.style.opacity === 0) {
-  
-  donutImg2.style.opacity = '1';
-  
+  // Om det är tomt på ovan rader…
+  // Vi kan inte komma åt "opacity" genom ".style" initialt, för elementet har inget style-attribut,
+  // utan stylen är applicerad via CSS och då måste vi använda getComputedStyle, se https://stackoverflow.com/a/9444783
+  // MEN om vi har satt style-attributet, så måste vi kolla .style…
+  // Egentligen bättre att jobba med klasser, "hidden" resp. ta bort "hidden", så slipper man denna "workaround"
+  // dvs. använda element.classList.toggle('hidden')
+  if (donutImg1Opacity === '') {
+    donutImg1Opacity = getComputedStyle(donutImg1).opacity;
+  }
+
+  if (donutImg2Opacity === '') {
+    donutImg2Opacity = getComputedStyle(donutImg2).opacity;
+  }
+
+  console.log(donutImg1Opacity, donutImg2Opacity);
+
+  if (donutImg1Opacity == 0) {
+    donutImg2.style.opacity = 0;
+    donutImg1.style.opacity = 1;
   } else {
-  
-  // växla till bild1
-  
+    donutImg2.style.opacity = 1;
+    donutImg1.style.opacity = 0;
   }
-  }
+}
   
 // Function that swaps images Previous image
 function prevImage() {
