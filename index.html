@@ -19,6 +19,7 @@
 
     <title>Gottfrids fantastiska munkar</title>
   </head>
+  
   <body>
     <header class="allColorTheme">
       <div class="leftHeader">
@@ -86,7 +87,7 @@
     </section>
 
     <!-- FORMORDER -->
-
+    <div id="form">
     <section id="formOrder" class="formOrder">
       <button class="formCloseBtn">
         <i class="fa-solid fa-x"></i>
@@ -97,21 +98,21 @@
 
         <div class="flexForm">
           <label>
-            <div class="errorMessage"></div>
             <span>Förnamn:*</span><br />
             <input type="text" id="firstname" name="firstname" required /><br />
+            <div class="errorMessage" id="errormessage"></div>
           </label>
 
           <label>
-            <div class="errorMessage"></div>
             <span>Efternamn:*</span><br />
             <input type="text" id="lastname" name="lastname" required /><br />
+            <div class="errorMessage" id="errormessage"></div>
           </label>
 
           <label>
-            <div class="errorMessage"></div>
             <span>Adress(gata):*</span><br />
             <input type="text" id="adress" name="adress" required /><br />
+            <div class="errorMessage"></div>
           </label>
 
           <label>
@@ -212,6 +213,7 @@
         <input type="submit" id="submit" value="Skicka order!" disabled />
       </form>
     </section>
+  </div>
 
       <div class="headingDonuts">
         <h1>G<svg class="svgDonut" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

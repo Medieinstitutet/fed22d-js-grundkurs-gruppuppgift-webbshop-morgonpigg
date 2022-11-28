@@ -162,7 +162,7 @@ const themeToggleCont = document.querySelector('#themeToggle');
 /** ****************** FORM VARIABLES ************************************** */
 
 // Form inputs
-const formOrderInputs = Array.from(document.querySelector('.formOrder').querySelectorAll('input'));
+const formOrderInputs = Array.from(document.querySelector('.formOrder input'));
 
 // Form open buttons
 const formOpenBtn = document.querySelector('.checkoutButton');
@@ -178,17 +178,17 @@ const cardPayment = document.querySelector('.cardPayment');
 const fakturaPayment = document.querySelector('.fakturaPayment');
 
 // Declare boolean variables for every validated input
-let isFirstname = false;
-let isLastname = false;
-let isAdress = false;
-let isZipcode = false;
-let isCity = false;
-let isTelephone = false;
-let isEmail = false;
-let isDebitKredit = false;
-let isInvoice = false;
-let isSocialSecurity = false;
-let isGdpr = false;
+// let isFirstname = false;
+// let isLastname = false;
+// let isAdress = false;
+// let isZipcode = false;
+// let isCity = false;
+// let isTelephone = false;
+// let isEmail = false;
+// let isDebitKredit = false;
+// let isInvoice = false;
+// let isSocialSecurity = false;
+// let isGdpr = false;
 
 /** ****************************************************************************
  ******************************** FUNCTIONS **************************************
@@ -544,7 +544,7 @@ function luciaSpecial() {
     if (addShopCartList.length > 0 && luciaIndex === -1) {
       addShopCartList.push({
         anyPrice: 0,
-        anyImg: 'img/donuts_img/lucia_donut.jpg',
+        anyImg: 'img/donuts_img/white.jpg',
         anyAlt: 'Luciamunk',
         anyName: 'Luciamunk',
         anyAmount: 1,
@@ -652,106 +652,61 @@ function fakturaPaymentOpen(e) {
   }
 }
 
+
 // Function to check if specifik input is valid
-function checkInputNotEmpty(e) {
-  const getId = e.target.id;
-  const getValue = e.target.value;
+function checkInputNotEmpty() {
+  const firstname = document.querySelector('#firstname').value;
+  const firstnameRGEX = /^[a-zåäöü\-.\s]{2,}$/i;
+  const firstnameResult = firstnameRGEX.test(firstname);
+  console.log(firstname);
 
-  if (getId == 'firstname' && getValue !== '') {
-    isFirstname = true;
-    removeError(e);
-  } else if (getId == 'firstname' && getValue == '') {
-    isFirstname = false;
-    addErrorMessage(e, 'Förnamn måste vara ifyllt.');
-  }
-  if (getId == 'lastname' && getValue !== '') {
-    isLastname = true;
-    removeError(e);
-  } else if (getId == 'lastname' && getValue == '') {
-    isLastname = false;
-    addErrorMessage(e, 'Efternamn måste vara ifyllt.');
-  }
-  if (getId == 'adress' && getValue !== '') {
-    isAdress = true;
-    removeError(e);
-  } else if (getId == 'adress' && getValue == '') {
-    isAdress = false;
-    addErrorMessage(e, 'Adress måste vara ifyllt.');
-  }
-  if (getId == 'zipcode' && getValue !== '') {
-    isZipcode = true;
-    removeError(e);
-  } else if (getId == 'zipcode' && getValue == '') {
-    isZipcode = false;
-    addErrorMessage(e, 'Postnummer måste vara ifyllt.');
-  }
-  if (getId == 'city' && getValue !== '') {
-    isCity = true;
-    removeError(e);
-  } else if (getId == 'city' && getValue == '') {
-    isCity = false;
-    addErrorMessage(e, 'Postort måste vara ifyllt.');
-  }
-  if (getId == 'telephone' && getValue !== '') {
-    isTelephone = true;
-    removeError(e);
-  } else if (getId == 'telephone' && getValue == '') {
-    isTelephone = false;
-    addErrorMessage(e, 'Telefon måste vara ifyllt.');
-  }
-  if (getId == 'email' && getValue !== '') {
-    isEmail = true;
-    removeError(e);
-  } else if (getId == 'email' && getValue == '') {
-    isEmail = false;
-    addErrorMessage(e, 'E-post måste vara ifyllt.');
-  }
-  if (getId == 'debitKredit' && e.target.checked) {
-    isDebitKredit = true;
-    isInvoice = false;
-    document.querySelector('#socialSecurity').required = false;
-  }
-  if (getId == 'invoice' && e.target.checked) {
-    isInvoice = true;
-    isDebitKredit = false;
-    document.querySelector('#socialSecurity').required = true;
-  }
-  if (getId == 'socialSecurity' && !getValue == '') {
-    isSocialSecurity = true;
-    removeError(e);
-  } else if (getId == 'socialSecurity' && getValue == '') {
-    isSocialSecurity = false;
-    addErrorMessage(e, 'Personnummer måste vara ifyllt.');
-  }
-  if (getId == 'gdpr' && e.target.checked) {
-    isGdpr = true;
-  } else if (getId == 'gdpr' && !e.target.checked) {
-    isGdpr = false;
+  if (firstnameResult == true) {
+    document.querySelector('.errorMessage').innerHTML = 'Godkänt.';
+    console.log('check');
+  } else {
+    document.querySelector('.errorMessage').innerHTML = 'Skriv ditt namn med bokstäver.';
+    console.log('nope');
   }
 
-  checkFormValid();
+  const lastname = document.querySelector('#lastname').value;
+  const lastnameRGEX = /^[a-zåäöü\-.\s]{2,}$/i;
+
+  const lastnameResult = lastnameRGEX.test(lastname);
+  console.log(lastname);
+
+  if (lastnameResult == true) {
+    console.log('check');
+  } else {
+    console.log('nope');
+  }
+
+
+
+
+  
+  //checkFormValid();
 }
 
 // Function to check if all inputs are valid, make submit button enabled
-function checkFormValid() {
-  const submitBtn = document.querySelector('#submit');
+// function checkFormValid() {
+//   const submitBtn = document.querySelector('#submit');
 
-  if (
-    isFirstname &&
-    isLastname &&
-    isAdress &&
-    isZipcode &&
-    isCity &&
-    isTelephone &&
-    isEmail &&
-    (isDebitKredit || (isInvoice && isSocialSecurity)) &&
-    isGdpr
-  ) {
-    submitBtn.disabled = false;
-  } else {
-    submitBtn.disabled = true;
-  }
-}
+//   if (
+//     isFirstname &&
+//     isLastname &&
+//     isAdress &&
+//     isZipcode &&
+//     isCity &&
+//     isTelephone &&
+//     isEmail &&
+//     (isDebitKredit || (isInvoice && isSocialSecurity)) &&
+//     isGdpr
+//   ) {
+//     submitBtn.disabled = false;
+//   } else {
+//     submitBtn.disabled = true;
+//   }
+// }
 
 // Function to add error message to non-valid input
 function addErrorMessage(e, string) {
@@ -884,6 +839,7 @@ invoiceRadio.addEventListener('change', fakturaPaymentOpen);
 for (let i = 0; i < formOrderInputs.length; i++) {
   formOrderInputs[i].addEventListener('change', checkInputNotEmpty);
 }
+
 // Function-call higher donut price on weekend
 specialPriceWeekend();
 
