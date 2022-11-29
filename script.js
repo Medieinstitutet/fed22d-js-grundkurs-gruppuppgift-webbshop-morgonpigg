@@ -2,6 +2,8 @@
 /* eslint-disable no-use-before-define */
 
 
+
+
 /** ****************************************************************************
  ******************************** VARIABLES **************************************
  ******************************************************************************
@@ -126,6 +128,11 @@ const donuts = [
   },
 ];
 
+/** ****************** NAV VARIABLES ****************************** */
+const hamburgerMenu = document.querySelector('#hamburgerMenu');
+const nav = document.querySelector('#nav'); 
+;
+
 /** ****************** SHOPPING CART VARIABLES ****************************** */
 
 const shoppingCart = document.querySelector('#shoppingCart');
@@ -142,8 +149,9 @@ const total = {
   amount: 0,
   price: 0,
   freight: 0,
+  delivery: 'Leveranstiden är 30 minuter',
   discountMessage: ''
-}
+};
 
 // Checkout discount message container
 const discountMessageContainer = document.querySelector('.checkoutContainer .discountMessage');
@@ -165,7 +173,11 @@ const themeToggleCont = document.querySelector('#themeToggle');
 /** ****************** FORM VARIABLES ************************************** */
 
 // Form inputs
-const formOrderInputs = Array.from(document.querySelector('.formOrder input'));
+const formOrderInputs = Array.from(document.querySelector('.formOrder').querySelectorAll('input'));
+const formOrderFirstName = document.querySelector('#firstname').value;
+const formOrderAdress = document.querySelector('#adress').value;
+const formOrderZipcode = document.querySelector('#zipcode').value;
+const formOrderCity = document.querySelector('#city').value;
 
 // Form open buttons
 const formOpenBtn = document.querySelector('.checkoutButton');
@@ -193,10 +205,22 @@ const fakturaPayment = document.querySelector('.fakturaPayment');
 // let isSocialSecurity = false;
 // let isGdpr = false;
 
+// Declare variable for form confirmation 
+const formConfirmation = document.querySelector('#orderConfirmation');
+// Declare a variable for random ordernumber
+const orderNumber = Math.round((Math.random() * 100000));
+
 /** ****************************************************************************
  ******************************** FUNCTIONS **************************************
  ******************************************************************************
  */
+
+/** ****************** NAV FUNCTIONS ************************************** */
+
+// Function open Menu
+function toggleMenu(e) {
+  nav.classList.toggle('open'); //metod toggle adds/remove klass
+}
 
 /** ****************** DONUT FUNCTIONS ************************************** */
 
@@ -638,12 +662,15 @@ function writeOutToggleTheme() {
 function toggleTheme() {
   themeBtn.classList.toggle('themeBtnMove');
   const colorTheme = document.querySelectorAll('.allColorTheme');
+  const formColorTheme = document.querySelector('.confirmContainer');
 
   document.body.classList.toggle('darkTheme');
   formOrder.classList.toggle('darkThemebg');
   colorTheme.forEach(theme => {
     theme.classList.toggle('darkTheme');
   });
+  formColorTheme.classList.toggle('darkThemeBg');
+  
 }
 
 /** ****************** FORM FUNCTIONS ************************************** */
@@ -676,45 +703,94 @@ function fakturaPaymentOpen(e) {
   }
 }
 
-
 // Function to check if specifik input is valid
-function checkInputNotEmpty() {
+function checkInputNotEmpty(e) {
+  
   const firstname = document.querySelector('#firstname').value;
   const firstnameRGEX = /^[a-zåäöü\-.\s]{2,}$/i;
-  const firstnameResult = firstnameRGEX.test(firstname);
   console.log(firstname);
+  // const getId = e.target.id;
+  // const getValue = e.target.value;
 
-  if (firstnameResult == true && 0) {
-    document.querySelector('.errorMessage').innerHTML = 'Godkänt.';
-    console.log('check');
-  } else {
-    document.querySelector('.errorMessage').innerHTML = 'Skriv ditt namn med bokstäver.';
-    console.log('nope');
-  }
+  // if (getId == 'firstname' && getValue !== '') {
+  //   isFirstname = true;
+  //   removeError(e);
+  // } else if (getId == 'firstname' && getValue == '') {
+  //   isFirstname = false;
+  //   addErrorMessage(e, 'Förnamn måste vara ifyllt.');
+  // }
+  // if (getId == 'lastname' && getValue !== '') {
+  //   isLastname = true;
+  //   removeError(e);
+  // } else if (getId == 'lastname' && getValue == '') {
+  //   isLastname = false;
+  //   addErrorMessage(e, 'Efternamn måste vara ifyllt.');
+  // }
+  // if (getId == 'adress' && getValue !== '') {
+  //   isAdress = true;
+  //   removeError(e);
+  // } else if (getId == 'adress' && getValue == '') {
+  //   isAdress = false;
+  //   addErrorMessage(e, 'Adress måste vara ifyllt.');
+  // }
+  // if (getId == 'zipcode' && getValue !== '') {
+  //   isZipcode = true;
+  //   removeError(e);
+  // } else if (getId == 'zipcode' && getValue == '') {
+  //   isZipcode = false;
+  //   addErrorMessage(e, 'Postnummer måste vara ifyllt.');
+  // }
+  // if (getId == 'city' && getValue !== '') {
+  //   isCity = true;
+  //   removeError(e);
+  // } else if (getId == 'city' && getValue == '') {
+  //   isCity = false;
+  //   addErrorMessage(e, 'Postort måste vara ifyllt.');
+  // }
+  // if (getId == 'telephone' && getValue !== '') {
+  //   isTelephone = true;
+  //   removeError(e);
+  // } else if (getId == 'telephone' && getValue == '') {
+  //   isTelephone = false;
+  //   addErrorMessage(e, 'Telefon måste vara ifyllt.');
+  // }
+  // if (getId == 'email' && getValue !== '') {
+  //   isEmail = true;
+  //   removeError(e);
+  // } else if (getId == 'email' && getValue == '') {
+  //   isEmail = false;
+  //   addErrorMessage(e, 'E-post måste vara ifyllt.');
+  // }
+  // if (getId == 'debitKredit' && e.target.checked) {
+  //   isDebitKredit = true;
+  //   isInvoice = false;
+  //   document.querySelector('#socialSecurity').required = false;
+  // }
+  // if (getId == 'invoice' && e.target.checked) {
+  //   isInvoice = true;
+  //   isDebitKredit = false;
+  //   document.querySelector('#socialSecurity').required = true;
+  // }
+  // if (getId == 'socialSecurity' && !getValue == '') {
+  //   isSocialSecurity = true;
+  //   removeError(e);
+  // } else if (getId == 'socialSecurity' && getValue == '') {
+  //   isSocialSecurity = false;
+  //   addErrorMessage(e, 'Personnummer måste vara ifyllt.');
+  // }
+  // if (getId == 'gdpr' && e.target.checked) {
+  //   isGdpr = true;
+  // } else if (getId == 'gdpr' && !e.target.checked) {
+  //   isGdpr = false;
+  // }
 
-  const lastname = document.querySelector('#lastname').value;
-  const lastnameRGEX = /^[a-zåäöü\-.\s]{2,}$/i;
-
-  const lastnameResult = lastnameRGEX.test(lastname);
-  console.log(lastname);
-
-  if (lastnameResult == true) {
-    console.log('check');
-  } else {
-    console.log('nope');
-  }
-
-
-
-
-  
-  //checkFormValid();
+  checkFormValid();
 }
 
 // Function to check if all inputs are valid, make submit button enabled
 // function checkFormValid() {
 //   const submitBtn = document.querySelector('#submit');
-
+//   submitBtn.addEventListener('click', specialDelivery);
 //   if (
 //     isFirstname &&
 //     isLastname &&
@@ -730,6 +806,7 @@ function checkInputNotEmpty() {
 //   } else {
 //     submitBtn.disabled = true;
 //   }
+  
 // }
 
 // Function to add error message to non-valid input
@@ -748,6 +825,42 @@ function addErrorMessage(e, string) {
 function removeError(e) {
   e.target.classList.remove('error');
   e.target.parentElement.querySelector('.errorMessage').innerHTML = '';
+}
+/** ******************WRITE OUT FORM CONFIRMATION FUNCTION ******************** */
+
+function writeOutFormConfirmation() {
+
+  formConfirmation.innerHTML +=`
+    <div class="confirmContainer" id="confirmContainer">
+    <h4>Tack för din order ${formOrderFirstName}!
+    <p>Ordernummer: ${orderNumber}
+    <p>Du har beställt: ${total.amount} Stycken munkar <p>
+    <p>Totalsumman för ordern är: ${total.price} kr</p>
+    <p>Fraktkostnaden landar på: ${total.freight} kr </p>
+    <p>Beställningen kommer levereras till: ${formOrderAdress} ${formOrderZipcode} ${formOrderCity}</p>
+    <p>${total.delivery}</p>
+    <a href="index.html">Tillbaka till startsidan</a>
+    </div>
+  `;
+ 
+} 
+
+/** ****************** SPECIAL DELIVERY FUNCTION ****************************** */
+function specialDelivery(){
+  const date = new Date();
+  const day = date.getDay();
+  const hour = date.getHours();
+  
+  if ( day === 6 || day === 0){
+    total.delivery = 'Leveranstiden är 90 minuter.';
+  }
+  if(hour > 23  || hour < 2){
+    total.delivery = 'Leveranstiden är 45 minuter.';
+  }
+  if (day === 5 && hour > 11 && hour < 13){
+    total.delivery = 'Vi sitter i möte leveransen sker 15.00.'
+  } 
+  writeOutFormConfirmation();
 }
 
 /** ****************** SORT-BY FUNCTIONS ************************************** */
@@ -846,6 +959,9 @@ function sortByCategoryBtn() {
  ******************************************************************************
  */
 
+ //Nav menu open
+ //hamburgerMenu.addEventListener('click', toggleMenu);
+
 // ShoppingCart open/close eventlisteners
 shoppingCart.addEventListener('click', toggleShoppingCartOpenState);
 shoppingClose.addEventListener('click', toggleShoppingCartOpenState);
@@ -862,19 +978,19 @@ formCloseBtn.addEventListener('click', formOrderClose);
 cardRadio.addEventListener('change', cardPaymentOpen);
 invoiceRadio.addEventListener('change', fakturaPaymentOpen);
 
+
 // Form inputs, add event listeners
 for (let i = 0; i < formOrderInputs.length; i++) {
   formOrderInputs[i].addEventListener('change', checkInputNotEmpty);
 }
-
 // Function-call higher donut price on weekend
 specialPriceWeekend();
-
 // Function-call to write out donuts
 writeOutDonuts();
 // Function-call to write out sorting-iconsw
 writeOutSortProducts();
 // Function Call to wtie out theme-toggle
 writeOutToggleTheme();
+
 
 christmasSpecial();
