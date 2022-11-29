@@ -660,7 +660,7 @@ function checkInputNotEmpty() {
   const firstnameResult = firstnameRGEX.test(firstname);
   console.log(firstname);
 
-  if (firstnameResult == true) {
+  if (firstnameResult == true && 0) {
     document.querySelector('.errorMessage').innerHTML = 'Godkänt.';
     console.log('check');
   } else {
