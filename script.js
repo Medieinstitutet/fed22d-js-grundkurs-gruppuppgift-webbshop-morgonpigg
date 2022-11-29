@@ -219,7 +219,7 @@ const orderNumber = Math.round((Math.random() * 100000));
 
 // Function open Menu
 function toggleMenu(e) {
-  nav.classList.toggle('open'); //metod toggle adds/remove klass
+  nav.classList.toggle('open'); // metod toggle adds/remove klass
 }
 
 /** ****************** DONUT FUNCTIONS ************************************** */
@@ -788,26 +788,26 @@ function checkInputNotEmpty(e) {
 }
 
 // Function to check if all inputs are valid, make submit button enabled
-// function checkFormValid() {
-//   const submitBtn = document.querySelector('#submit');
-//   submitBtn.addEventListener('click', specialDelivery);
-//   if (
-//     isFirstname &&
-//     isLastname &&
-//     isAdress &&
-//     isZipcode &&
-//     isCity &&
-//     isTelephone &&
-//     isEmail &&
-//     (isDebitKredit || (isInvoice && isSocialSecurity)) &&
-//     isGdpr
-//   ) {
-//     submitBtn.disabled = false;
-//   } else {
-//     submitBtn.disabled = true;
-//   }
+function checkFormValid() {
+  const submitBtn = document.querySelector('#submit');
+  submitBtn.addEventListener('click', specialDelivery);
+  if (
+    isFirstname &&
+    isLastname &&
+    isAdress &&
+    isZipcode &&
+    isCity &&
+    isTelephone &&
+    isEmail &&
+    (isDebitKredit || (isInvoice && isSocialSecurity)) &&
+    isGdpr
+  ) {
+    submitBtn.disabled = false;
+  } else {
+    submitBtn.disabled = true;
+  }
   
-// }
+}
 
 // Function to add error message to non-valid input
 function addErrorMessage(e, string) {
@@ -959,8 +959,8 @@ function sortByCategoryBtn() {
  ******************************************************************************
  */
 
- //Nav menu open
- //hamburgerMenu.addEventListener('click', toggleMenu);
+// Nav menu open
+hamburgerMenu.addEventListener('click', toggleMenu);
 
 // ShoppingCart open/close eventlisteners
 shoppingCart.addEventListener('click', toggleShoppingCartOpenState);
