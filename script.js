@@ -181,7 +181,6 @@ const formOpenBtn = document.querySelector('.checkoutButton');
 const formOrder = document.querySelector('.formOrder');
 const formCloseBtn = document.querySelector('.formCloseBtn');
 
-
 const submitBtn = document.querySelector('#submit');
 
 const formOrderFirstName = document.querySelector('#firstname');
@@ -213,10 +212,10 @@ let isZipcode = false;
 let isCity = false;
 let isTelephone = false;
 let isEmail = false;
-const isDebitCredit = false;
+let isDebitCredit = false;
 let isInvoice = false;
-const isSocialSecurity = false;
-const isGdpr = false;
+let isSocialSecurity = false;
+let isGdpr = false;
 
 
 // Declare variable for form confirmation
@@ -863,21 +862,29 @@ function checkEmail() {
     return;
   //  emailError.innerHTML = '  ange giltig epostadress';
   }
-  console.log('email is ', isCity);
+  console.log('email is ', isEmail);
   console.log(formOrderEmail.value);
   checkFormValid();
 }
 
 function checkInvoice(){
   isInvoice = true;
-  /*
+  if(isInvoice = true) {
+    isDebitCredit = false;
+  }
+
+  console.log(isInvoice);
+  checkFormValid();
+
+  
   formOrderSocialSecurity.addEventListener('change', checkSocialSecurity);
+
   function checkSocialSecurity(){
     if (/^(19|20)?(\d{6}([-+]|\s)\d{4}|(?!19|20)\d{10})$/.test(formOrderSocialSecurity.value)) {
       isSocialSecurity = true;
-    /* socialSecurityError.innerHTML = ` <span class="material-symbols-outlined">
+    /* socialSecurityError.innerHTML = ` <span class="material-symbols-outlined"> 
     check
-    </span>`; 
+    </span>`; */
     } else {
       isSocialSecurity = false;
       
@@ -886,16 +893,36 @@ function checkInvoice(){
     console.log('id is ', isSocialSecurity);
     console.log(formOrderSocialSecurity.value);
     checkFormValid();
-  } */
+  } 
+}
+
+function checkPaymentCredit(){
+  isDebitCredit = true;
+  if(isDebitCredit = true) {
+    isInvoice = false;
+  }
+
+  console.log(isDebitCredit);
   checkFormValid();
 }
+
+function checkGdpr(){
+  if(gdpr.checked) {
+    isGdpr = true;
+  } else {
+    isGdpr= false
+  }
+  console.log(isGdpr);
+  checkFormValid();
+}
+
 
 
 // Function to check if all inputs are valid, make submit button enabled
 function checkFormValid() { 
   console.log(isInvoice && isSocialSecurity);
   submitBtn.addEventListener('click', specialDelivery);
-  
+  (console.log(isGdpr))
   if ( isFirstname &&
      isLastname &&
      isAdress &&
@@ -905,10 +932,12 @@ function checkFormValid() {
      isEmail &&
      (isDebitCredit  || (isInvoice && isSocialSecurity)) &&
     isGdpr
-  )
-  {
-    console.log('allt är dant')
-    submitBtn.removeAttribute('disabled');
+  ) {
+    console.log('allt är sant')
+    submitBtn.disabled = false;
+  }
+  else {
+    submitBtn.disabled = true;
   }
 
 }
@@ -1092,7 +1121,9 @@ formOrderCity.addEventListener('change', checkCity);
 formOrderPhone.addEventListener('change', checkPhone);
 formOrderEmail.addEventListener('change', checkEmail);
 invoiceRadio.addEventListener('change', checkInvoice);
-// cardRadio.addEventListener('change', checkPaymentCredit);
+cardRadio.addEventListener('change', checkPaymentCredit);
+gdpr.addEventListener('change', checkGdpr);
+
 
 // Function-call higher donut price on weekend
 specialPriceWeekend();
