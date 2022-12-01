@@ -1,9 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable no-use-before-define */
 
-
-
-
 /** ****************************************************************************
  ******************************** VARIABLES **************************************
  ******************************************************************************
@@ -130,9 +127,7 @@ const donuts = [
 
 /** ****************** NAV VARIABLES ****************************** */
 const hamburgerMenu = document.querySelector('#hamburgerMenu');
-const nav = document.querySelector('#nav'); 
-;
-
+const nav = document.querySelector('#nav');
 /** ****************** SHOPPING CART VARIABLES ****************************** */
 
 const shoppingCart = document.querySelector('#shoppingCart');
@@ -150,7 +145,7 @@ const total = {
   price: 0,
   freight: 0,
   delivery: 'Leveranstiden är 30 minuter',
-  discountMessage: ''
+  discountMessage: '',
 };
 
 // Checkout discount message container
@@ -193,22 +188,22 @@ const cardPayment = document.querySelector('.cardPayment');
 const fakturaPayment = document.querySelector('.fakturaPayment');
 
 // Declare boolean variables for every validated input
-// let isFirstname = false;
-// let isLastname = false;
-// let isAdress = false;
-// let isZipcode = false;
-// let isCity = false;
-// let isTelephone = false;
-// let isEmail = false;
-// let isDebitKredit = false;
-// let isInvoice = false;
-// let isSocialSecurity = false;
-// let isGdpr = false;
+let isFirstname = false;
+let isLastname = false;
+let isAdress = false;
+let isZipcode = false;
+let isCity = false;
+let isTelephone = false;
+let isEmail = false;
+let isDebitKredit = false;
+let isInvoice = false;
+let isSocialSecurity = false;
+let isGdpr = false;
 
-// Declare variable for form confirmation 
+// Declare variable for form confirmation
 const formConfirmation = document.querySelector('#orderConfirmation');
 // Declare a variable for random ordernumber
-const orderNumber = Math.round((Math.random() * 100000));
+const orderNumber = Math.round(Math.random() * 100000);
 
 /** ****************************************************************************
  ******************************** FUNCTIONS **************************************
@@ -231,15 +226,15 @@ function writeOutDonuts() {
   for (let i = 0; i < donuts.length; i++) {
     donutContainer.innerHTML += `
       <article class="donut allColorTheme" >
-        <div class="slideshow " id="slideshow">
+        <div class="slideshow " id="slideshow-${i}">
           <div class="images">
-            <img id="img1" class="img-1 donutImg-1-${i}"  src="${donuts[i].images[0]}" alt="${donuts[i].alt[0]}" width="100" height="150">
+            <img id="img1-${i}" class="img-1 donutImg-1-${i}"  src="${donuts[i].images[0]}" alt="${donuts[i].alt[0]}" width="100" height="150">
           </div>
           <div class="controls">
-            <button class="left" id="prevImage" data-id="${i}"><span  class="material-symbols-outlined">chevron_left</span></button>
-            <button class="right" id="nextImage" data-id="${i}"><span class="material-symbols-outlined">chevron_right</span></button>
+            <button class="left" id="prevImage-${i}" data-id="${i}"><span  class="material-symbols-outlined">chevron_left</span></button>
+            <button class="right" id="nextImage-${i}" data-id="${i}"><span class="material-symbols-outlined">chevron_right</span></button>
           </div>
-          <div class="indicator" id="indicatorDots"></div>
+          <div class="indicator" id="indicatorDots-${i}"></div>
           <div class="donutInfo"> 
             <h2>${donuts[i].name}</h2>
             <span class="price">${donuts[i].price} kr/st</span><br>
@@ -249,6 +244,7 @@ function writeOutDonuts() {
             <button class="plus" data-id="${i}">+</button>
             <button class="addToCart" data-id="${i}">Köp</button><br>
             <span class="category" >Kategori: <span class="category">${donuts[i].category}</span></span>  
+          </div>
           </div>
       </article>    
         `;
@@ -349,10 +345,10 @@ function sendToCart(e) {
       anyName: donuts[addToCartBtn].name,
       anyAmount: donuts[addToCartBtn].amount,
       anySum: donuts[addToCartBtn].sum,
-      discountMessage: "",
+      discountMessage: '',
     });
   }
-  
+
   luciaSpecial();
   manySingleDonutsDiscount();
   printOutShopCart();
@@ -365,11 +361,15 @@ function sendToCart(e) {
 
 // Function that clears the values for the donuts when clicking the buy-button
 function clearValues(addToCartBtn) {
-  const donutSum = document.querySelectorAll('.sum');
-  donutSum[addToCartBtn].innerHTML = `0 kr`;
-  const donutAmount = document.querySelectorAll('.amount');
-  donutAmount[addToCartBtn].innerHTML = `0 st`;
+  const sum = document.querySelectorAll('.sum');
+  const amount = document.querySelectorAll('.amount');
 
+  for (let i = 0; i < donuts.length; i++) {
+    donuts[addToCartBtn].sum = 0;
+    donuts[addToCartBtn].amount = 0;
+  }
+  sum[addToCartBtn].innerHTML = `${donuts[addToCartBtn].sum} kr`;
+  amount[addToCartBtn].innerHTML = `${donuts[addToCartBtn].amount} st`;
 }
 
 /** ****************** SLIDESHOW FUNCTIONS ************************************** */
@@ -441,7 +441,10 @@ function activateCheckoutSection() {
 
 // Updates total amount in shopCart & shopcartIcon
 function updateShopCartTotal() {
-  total.amount = addShopCartList.reduce((previousValue, addShopCartList) => addShopCartList.anyAmount + previousValue, 0);
+  total.amount = addShopCartList.reduce(
+    (previousValue, addShopCartList) => addShopCartList.anyAmount + previousValue,
+    0
+  );
   document.querySelector('#shoppingCartTotalItems').innerHTML = total.amount;
   document.querySelector('#amountChoosen').innerHTML = total.amount;
   if (total.amount === 0) {
@@ -467,10 +470,9 @@ function printOutShopCart() {
   document.querySelector('#shopCartContent').innerHTML = '';
 
   for (let i = 0; i < addShopCartList.length; i++) {
-
     document.querySelector('#shopCartContent').innerHTML += `
         <div id="shopCartAddedDiv"><img class="imgInCart" src="${addShopCartList[i].anyImg}" alt="${addShopCartList[i].anyAlt}"  width="55" height="55"></img>
-        <span class="text"><h4>${addShopCartList[i].anyName}</h4><br>
+        <h4 class="text">${addShopCartList[i].anyName}</h4><br>
         <p>${addShopCartList[i].anyAmount}st</p>
         <p>${addShopCartList[i].anyPrice}kr/st</p>
         <p>${addShopCartList[i].anySum}kr</p><br>
@@ -512,7 +514,7 @@ function superDiscountCode() {
   const discountCodeInput = document.querySelector('#discountCodeInput');
   const discountCode = 'a_damn_fine-cup_of-coffee';
   const freightCostContainer = document.querySelector('.freightCost');
-  
+
   if (discountCodeInput.value === discountCode) {
     total.price = 0;
     total.freight = 0;
@@ -526,10 +528,9 @@ function superDiscountCode() {
 
 // 10% off per donut when ordering 10x of same donut
 function manySingleDonutsDiscount() {
-  
   for (let i = 0; i < addShopCartList.length; i++) {
     const cartItem = addShopCartList[i];
-    
+
     cartItem.anySum = cartItem.anyAmount * cartItem.anyPrice;
 
     if (cartItem.anyAmount >= 10) {
@@ -574,7 +575,7 @@ function specialPriceWeekend() {
   const date = new Date();
   const day = date.getDay();
   const hour = date.getHours();
-  
+
   if ((day === 5 && hour > 15) || day === 6 || day === 0 || (day === 1 && hour < 3)) {
     for (let i = 0; i < donuts.length; i++) {
       const donut = donuts[i];
@@ -597,7 +598,7 @@ function luciaSpecial() {
         anyName: 'Luciamunk',
         anyAmount: 1,
         anySum: 0,
-        discountMessage: "Glad lucia, vi skickar med en gratis Luciamunk.",
+        discountMessage: 'Glad lucia, vi skickar med en gratis Luciamunk.',
       });
       addShopCartList.push(addShopCartList.splice(luciaIndex, 1)[0]);
     } else if (luciaIndex > -1) {
@@ -627,7 +628,7 @@ function freightCost() {
     total.freight = 0;
     freightCostContainer.innerHTML = 'Gratis frakt';
   } else {
-    total.freight = Math.round(25 + (total.price * 0.1));
+    total.freight = Math.round(25 + total.price * 0.1);
     freightCostContainer.innerHTML = `+${total.freight} frakt`;
   }
 }
@@ -670,7 +671,6 @@ function toggleTheme() {
     theme.classList.toggle('darkTheme');
   });
   formColorTheme.classList.toggle('darkThemeBg');
-  
 }
 
 /** ****************** FORM FUNCTIONS ************************************** */
@@ -705,84 +705,84 @@ function fakturaPaymentOpen(e) {
 
 // Function to check if specifik input is valid
 function checkInputNotEmpty(e) {
-  
-  const firstname = document.querySelector('#firstname').value;
-  const firstnameRGEX = /^[a-zåäöü\-.\s]{2,}$/i;
-  console.log(firstname);
-  // const getId = e.target.id;
-  // const getValue = e.target.value;
+  const getId = e.target.id;
+  const getValue = e.target.value;
+  console.log(e.target.id)
+  console.log(e.target.value)
 
-  // if (getId == 'firstname' && getValue !== '') {
-  //   isFirstname = true;
-  //   removeError(e);
-  // } else if (getId == 'firstname' && getValue == '') {
-  //   isFirstname = false;
-  //   addErrorMessage(e, 'Förnamn måste vara ifyllt.');
-  // }
-  // if (getId == 'lastname' && getValue !== '') {
-  //   isLastname = true;
-  //   removeError(e);
-  // } else if (getId == 'lastname' && getValue == '') {
-  //   isLastname = false;
-  //   addErrorMessage(e, 'Efternamn måste vara ifyllt.');
-  // }
-  // if (getId == 'adress' && getValue !== '') {
-  //   isAdress = true;
-  //   removeError(e);
-  // } else if (getId == 'adress' && getValue == '') {
-  //   isAdress = false;
-  //   addErrorMessage(e, 'Adress måste vara ifyllt.');
-  // }
-  // if (getId == 'zipcode' && getValue !== '') {
-  //   isZipcode = true;
-  //   removeError(e);
-  // } else if (getId == 'zipcode' && getValue == '') {
-  //   isZipcode = false;
-  //   addErrorMessage(e, 'Postnummer måste vara ifyllt.');
-  // }
-  // if (getId == 'city' && getValue !== '') {
-  //   isCity = true;
-  //   removeError(e);
-  // } else if (getId == 'city' && getValue == '') {
-  //   isCity = false;
-  //   addErrorMessage(e, 'Postort måste vara ifyllt.');
-  // }
-  // if (getId == 'telephone' && getValue !== '') {
-  //   isTelephone = true;
-  //   removeError(e);
-  // } else if (getId == 'telephone' && getValue == '') {
-  //   isTelephone = false;
-  //   addErrorMessage(e, 'Telefon måste vara ifyllt.');
-  // }
-  // if (getId == 'email' && getValue !== '') {
-  //   isEmail = true;
-  //   removeError(e);
-  // } else if (getId == 'email' && getValue == '') {
-  //   isEmail = false;
-  //   addErrorMessage(e, 'E-post måste vara ifyllt.');
-  // }
-  // if (getId == 'debitKredit' && e.target.checked) {
-  //   isDebitKredit = true;
-  //   isInvoice = false;
-  //   document.querySelector('#socialSecurity').required = false;
-  // }
-  // if (getId == 'invoice' && e.target.checked) {
-  //   isInvoice = true;
-  //   isDebitKredit = false;
-  //   document.querySelector('#socialSecurity').required = true;
-  // }
-  // if (getId == 'socialSecurity' && !getValue == '') {
-  //   isSocialSecurity = true;
-  //   removeError(e);
-  // } else if (getId == 'socialSecurity' && getValue == '') {
-  //   isSocialSecurity = false;
-  //   addErrorMessage(e, 'Personnummer måste vara ifyllt.');
-  // }
-  // if (getId == 'gdpr' && e.target.checked) {
-  //   isGdpr = true;
-  // } else if (getId == 'gdpr' && !e.target.checked) {
-  //   isGdpr = false;
-  // }
+  if (getId == 'firstname' && getValue !== '') {
+    isFirstname = true;
+    removeError(e);
+  } else if (getId == 'firstname' && getValue == '') {
+    isFirstname = false;
+    addErrorMessage(e, 'Förnamn måste vara ifyllt.');
+    console.log(getID)
+    console.log(getValue)
+  }
+  if (getId == 'lastname' && getValue !== '') {
+    isLastname = true;
+    removeError(e);
+  } else if (getId == 'lastname' && getValue == '') {
+    isLastname = false;
+    addErrorMessage(e, 'Efternamn måste vara ifyllt.');
+  }
+  if (getId == 'adress' && getValue !== '') {
+    isAdress = true;
+    removeError(e);
+  } else if (getId == 'adress' && getValue == '') {
+    isAdress = false;
+    addErrorMessage(e, 'Adress måste vara ifyllt.');
+  }
+  if (getId == 'zipcode' && getValue !== '') {
+    isZipcode = true;
+    removeError(e);
+  } else if (getId == 'zipcode' && getValue == '') {
+    isZipcode = false;
+    addErrorMessage(e, 'Postnummer måste vara ifyllt.');
+  }
+  if (getId == 'city' && getValue !== '') {
+    isCity = true;
+    removeError(e);
+  } else if (getId == 'city' && getValue == '') {
+    isCity = false;
+    addErrorMessage(e, 'Postort måste vara ifyllt.');
+  }
+  if (getId == 'telephone' && getValue !== '') {
+    isTelephone = true;
+    removeError(e);
+  } else if (getId == 'telephone' && getValue == '') {
+    isTelephone = false;
+    addErrorMessage(e, 'Telefon måste vara ifyllt.');
+  }
+  if (getId == 'email' && getValue !== '') {
+    isEmail = true;
+    removeError(e);
+  } else if (getId == 'email' && getValue == '') {
+    isEmail = false;
+    addErrorMessage(e, 'E-post måste vara ifyllt.');
+  }
+  if (getId == 'debitKredit' && e.target.checked) {
+    isDebitKredit = true;
+    isInvoice = false;
+    document.querySelector('#socialSecurity').required = false;
+  }
+  if (getId == 'invoice' && e.target.checked) {
+    isInvoice = true;
+    isDebitKredit = false;
+    document.querySelector('#socialSecurity').required = true;
+  }
+  if (getId == 'socialSecurity' && !getValue == '') {
+    isSocialSecurity = true;
+    removeError(e);
+  } else if (getId == 'socialSecurity' && getValue == '') {
+    isSocialSecurity = false;
+    addErrorMessage(e, 'Personnummer måste vara ifyllt.');
+  }
+  if (getId == 'gdpr' && e.target.checked) {
+    isGdpr = true;
+  } else if (getId == 'gdpr' && !e.target.checked) {
+    isGdpr = false;
+  }
 
   checkFormValid();
 }
@@ -806,7 +806,6 @@ function checkFormValid() {
   } else {
     submitBtn.disabled = true;
   }
-  
 }
 
 // Function to add error message to non-valid input
@@ -829,37 +828,38 @@ function removeError(e) {
 /** ******************WRITE OUT FORM CONFIRMATION FUNCTION ******************** */
 
 function writeOutFormConfirmation() {
-
-  formConfirmation.innerHTML +=`
+  formConfirmation.innerHTML += `
     <div class="confirmContainer" id="confirmContainer">
-    <h4>Tack för din order ${formOrderFirstName}!
-    <p>Ordernummer: ${orderNumber}
-    <p>Du har beställt: ${total.amount} Stycken munkar <p>
-    <p>Totalsumman för ordern är: ${total.price} kr</p>
-    <p>Fraktkostnaden landar på: ${total.freight} kr </p>
-    <p>Beställningen kommer levereras till: ${formOrderAdress} ${formOrderZipcode} ${formOrderCity}</p>
-    <p>${total.delivery}</p>
-    <a href="index.html">Tillbaka till startsidan</a>
+    <h2>Orderbekräftelse</h2>
+    <h4>Tack för din order ${formOrderFirstName}!</h4>
+    <div>
+        <p>Ordernummer: ${orderNumber}
+        <p>Du har beställt:<span class="inhance"> ${total.amount} Stycken munkar</span><p>
+        <p>Totalsumman för ordern är:<span class="inhance"> ${total.price} kr </span></p>
+        <p>Fraktkostnaden landar på:<span class="inhance"> ${total.freight} kr </span></p>
+        <p>Beställningen kommer levereras till:<span class="inhance"> ${formOrderAdress} ${formOrderZipcode} ${formOrderCity}</span></p>
+        <p>${total.delivery}</p>
+    </div>
+      <button><a href=""index.html">Tillbaka till startsidan</a></button>
     </div>
   `;
- 
-} 
+}
 
 /** ****************** SPECIAL DELIVERY FUNCTION ****************************** */
-function specialDelivery(){
+function specialDelivery() {
   const date = new Date();
   const day = date.getDay();
   const hour = date.getHours();
-  
-  if ( day === 6 || day === 0){
+
+  if (day === 6 || day === 0) {
     total.delivery = 'Leveranstiden är 90 minuter.';
   }
-  if(hour > 23  || hour < 2){
+  if (hour > 23 || hour < 2) {
     total.delivery = 'Leveranstiden är 45 minuter.';
   }
-  if (day === 5 && hour > 11 && hour < 13){
-    total.delivery = 'Vi sitter i möte leveransen sker 15.00.'
-  } 
+  if (day === 5 && hour > 11 && hour < 13) {
+    total.delivery = 'Vi sitter i möte leveransen sker 15.00.';
+  }
   writeOutFormConfirmation();
 }
 
@@ -978,7 +978,6 @@ formCloseBtn.addEventListener('click', formOrderClose);
 cardRadio.addEventListener('change', cardPaymentOpen);
 invoiceRadio.addEventListener('change', fakturaPaymentOpen);
 
-
 // Form inputs, add event listeners
 for (let i = 0; i < formOrderInputs.length; i++) {
   formOrderInputs[i].addEventListener('change', checkInputNotEmpty);
@@ -991,6 +990,5 @@ writeOutDonuts();
 writeOutSortProducts();
 // Function Call to wtie out theme-toggle
 writeOutToggleTheme();
-
 
 christmasSpecial();

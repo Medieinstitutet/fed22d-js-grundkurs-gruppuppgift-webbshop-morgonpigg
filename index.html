@@ -106,7 +106,7 @@
     </section>
 
     <!-- FORMORDER -->
-    <div id="form">
+
     <section id="formOrder" class="formOrder">
       <button class="formCloseBtn">
         <i class="fa-solid fa-x"></i>
@@ -117,15 +117,17 @@
 
         <div class="flexForm">
           <label>
-            <span>Förnamn:*</span><br />
-            <input type="text" id="firstname" name="firstname" required /><br />
             <div class="errorMessage" id="errormMssage"></div>
+            <span>Förnamn:*</span><br />
+            <input type="text" id="firstname" name="firstname" required />
+            <div class="firstnameMsg" id="firstnameMsg"></div>
           </label>
 
           <label>
+            <div class="errorMessage" id="errorMessage"></div>
             <span>Efternamn:*</span><br />
             <input type="text" id="lastname" name="lastname" required /><br />
-            <div class="errorMessage" id="errorMessage"></div>
+            <div class="lastnameMsg" id="lastnameMsg"></div>
           </label>
 
           <label>
@@ -143,7 +145,7 @@
               name="zipcode"
               placeholder="ex.12345"
               minlength="5"
-              maxlength="5"
+              maxlength="6"
               required
             /><br />
           </label>
@@ -232,9 +234,9 @@
       <button type="submit" id="submit" value="Skicka order!" disabled>Skicka order!</button>
 
     </section>
-  </div>
 
-    <!--   CONFIRMCONFAINER FORM-->
+
+    <!--   CONFIRMCONTAINER FORM-->
     
     <article id="orderConfirmation" class="orderConfirmation">
       
