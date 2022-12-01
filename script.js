@@ -606,7 +606,7 @@ function luciaSpecial() {
     if (addShopCartList.length > 0 && luciaIndex === -1) {
       addShopCartList.push({
         anyPrice: 0,
-        anyImg: 'img/donuts_img/white.jpg',
+        anyImg: 'img/donuts_img/lucia-donut.jpg',
         anyAlt: 'Luciamunk',
         anyName: 'Luciamunk',
         anyAmount: 1,
@@ -905,8 +905,6 @@ function checkGdpr(){
   checkFormValid();
 }
 
-
-
 // Function to check if all inputs are valid, make submit button enabled
 function checkFormValid() { 
   console.log(isInvoice && isSocialSecurity);
@@ -930,6 +928,22 @@ function checkFormValid() {
   }
 
 }
+
+/******************************* RESET BTN ****************************************/
+
+const resetBtn = document.querySelector('#reset');
+
+resetBtn.addEventListener('click', function resetForm() {
+
+  const formInputs = document.querySelectorAll(
+    '#firstname, #lastname, #adress, #zipcode, #city, #telephone, #email, #socialSecurity ');
+    //lägg till att radio + gdpr ska vara false
+  formInputs.forEach(input => {
+    input.value = '';
+  });
+});
+
+/***********************************************************************/
 
 /*
 // Function to add error message to non-valid input
