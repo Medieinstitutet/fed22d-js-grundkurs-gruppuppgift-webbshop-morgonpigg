@@ -169,11 +169,6 @@ const themeToggleCont = document.querySelector('#themeToggle');
 
 // Form inputs
 
-// const formOrderFirstName = document.querySelector('#firstname').value;
-// const formOrderAdress = document.querySelector('#adress').value;
-// const formOrderZipcode = document.querySelector('#zipcode').value;
-// const formOrderCity = document.querySelector('#city').value;
-
 const form = document.querySelector('#countDownClear');
 
 // Form open buttons
@@ -701,25 +696,19 @@ function formOrderOpen() {
   setInterval(clearForm, 15 * 60 * 1000);
 }
 
-// Function to start timer
+// Function to clear value after timer
 function clearForm() {
-  const fname = document.querySelector('#firstname');
-  const lname = document.querySelector('#lastname');
-  const adress = document.querySelector('#adress');
-  const zipcode = document.querySelector('#zipcode');
-  const city = document.querySelector('#city');
-  const pcode = document.querySelector('#portkod');
-  const telephone = document.querySelector('#telephone');
-  const email = document.querySelector('#email');
-
-  fname.value = '';
-  lname.value = '';
-  adress.value = '';
-  zipcode.value = '';
-  city.value = '';
-  pcode.value = '';
-  telephone.value = '';
-  email.value = '';
+ 
+  formOrderFirstName.value = '';
+  formOrderLastName.value = '';
+  formOrderAdress.value = '';
+  formOrderZipcode.value = '';
+  formOrderAdress.value = '';
+  formOrderCity.value = '';
+  formOrderPhone.value = '';
+  formOrderEmail.value = '';
+  invoicePayment.value = '';
+  cardPayment.value = '';
 
   // Writing out message when form is cleared
   form.innerHTML = `Det tog för lång tid att fylla i dina uppgifter, du har 15 minuter på dig!`;
@@ -898,7 +887,7 @@ function checkInvoice(){
 
 function checkPaymentCredit(){
   isDebitCredit = true;
-  if(isDebitCredit = true) {
+  if(isDebitCredit) {
     isInvoice = false;
   }
 
@@ -964,13 +953,13 @@ function writeOutFormConfirmation() {
   formConfirmation.innerHTML += `
     <div class="confirmContainer" id="confirmContainer">
     <h2>Orderbekräftelse</h2>
-    <h4>Tack för din order ${formOrderFirstName}!</h4>
+    <h4>Tack för din order ${formOrderFirstName.value}!</h4>
     <div>
         <p>Ordernummer: ${orderNumber}
         <p>Du har beställt:<span class="inhance"> ${total.amount} Stycken munkar</span><p>
         <p>Totalsumman för ordern är:<span class="inhance"> ${total.price} kr </span></p>
         <p>Fraktkostnaden landar på:<span class="inhance"> ${total.freight} kr </span></p>
-        <p>Beställningen kommer levereras till:<span class="inhance"> ${formOrderAdress} ${formOrderZipcode} ${formOrderCity}</span></p>
+        <p>Beställningen kommer levereras till:<span class="inhance"> ${formOrderAdress.value} ${formOrderZipcode.value} ${formOrderCity.value}</span></p>
         <p>${total.delivery}</p>
     </div>
       <button><a href=""index.html">Tillbaka till startsidan</a></button>
