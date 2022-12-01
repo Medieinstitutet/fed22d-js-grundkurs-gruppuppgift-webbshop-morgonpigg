@@ -168,26 +168,44 @@ const themeToggleCont = document.querySelector('#themeToggle');
 /** ****************** FORM VARIABLES ************************************** */
 
 // Form inputs
-const formOrderInputs = Array.from(document.querySelector('.formOrder').querySelectorAll('input'));
-const formOrderFirstName = document.querySelector('#firstname').value;
-const formOrderAdress = document.querySelector('#adress').value;
-const formOrderZipcode = document.querySelector('#zipcode').value;
-const formOrderCity = document.querySelector('#city').value;
+
+// const formOrderFirstName = document.querySelector('#firstname').value;
+// const formOrderAdress = document.querySelector('#adress').value;
+// const formOrderZipcode = document.querySelector('#zipcode').value;
+// const formOrderCity = document.querySelector('#city').value;
+
+const form = document.querySelector('#countDownClear');
 
 // Form open buttons
 const formOpenBtn = document.querySelector('.checkoutButton');
 const formOrder = document.querySelector('.formOrder');
 const formCloseBtn = document.querySelector('.formCloseBtn');
 
-// Card/invoice buttons
-const cardRadio = document.querySelector('#debitKredit');
+
+const submitBtn = document.querySelector('#submit');
+
+const formOrderFirstName = document.querySelector('#firstname');
+const formOrderLastName = document.querySelector('#lastname');
+const formOrderAdress = document.querySelector('#adress');
+const formOrderZipcode = document.querySelector('#zipcode');
+const formOrderCity = document.querySelector('#city');
+const formOrderPhone = document.querySelector('#telephone');
+const formOrderEmail = document.querySelector('#email');
+
+// Card/invoice buttons 
+const cardRadio = document.querySelector('#debitCredit');
 const invoiceRadio = document.querySelector('#invoice');
 
 // Card/invoice inputs
 const cardPayment = document.querySelector('.cardPayment');
-const fakturaPayment = document.querySelector('.fakturaPayment');
+const invoicePayment = document.querySelector('.invoicePayment');
 
-// Declare boolean variables for every validated input
+const formOrderSocialSecurity = document.querySelector('#socialSecurity');
+
+const gdpr = document.querySelector('#gdpr');
+const newsletter = document.querySelector('#newsletter');
+
+
 let isFirstname = false;
 let isLastname = false;
 let isAdress = false;
@@ -195,10 +213,11 @@ let isZipcode = false;
 let isCity = false;
 let isTelephone = false;
 let isEmail = false;
-let isDebitKredit = false;
+const isDebitCredit = false;
 let isInvoice = false;
-let isSocialSecurity = false;
-let isGdpr = false;
+const isSocialSecurity = false;
+const isGdpr = false;
+
 
 // Declare variable for form confirmation
 const formConfirmation = document.querySelector('#orderConfirmation');
@@ -661,6 +680,7 @@ function writeOutToggleTheme() {
 }
 
 function toggleTheme() {
+  const themeBtn = document.querySelector('#themeBtn');
   themeBtn.classList.toggle('themeBtnMove');
   const colorTheme = document.querySelectorAll('.allColorTheme');
   const formColorTheme = document.querySelector('.confirmContainer');
@@ -679,6 +699,31 @@ function toggleTheme() {
 function formOrderOpen() {
   formOrder.classList.add('formOrderOpen');
   formCloseBtn.classList.add('formCloseBtnOpen');
+  setInterval(clearForm, 15 * 60 * 1000);
+}
+
+// Function to start timer
+function clearForm() {
+  const fname = document.querySelector('#firstname');
+  const lname = document.querySelector('#lastname');
+  const adress = document.querySelector('#adress');
+  const zipcode = document.querySelector('#zipcode');
+  const city = document.querySelector('#city');
+  const pcode = document.querySelector('#portkod');
+  const telephone = document.querySelector('#telephone');
+  const email = document.querySelector('#email');
+
+  fname.value = '';
+  lname.value = '';
+  adress.value = '';
+  zipcode.value = '';
+  city.value = '';
+  pcode.value = '';
+  telephone.value = '';
+  email.value = '';
+
+  // Writing out message when form is cleared
+  form.innerHTML = `Det tog för lång tid att fylla i dina uppgifter, du har 15 minuter på dig!`;
 }
 
 // Close form function
@@ -691,140 +736,199 @@ function formOrderClose() {
 function cardPaymentOpen(e) {
   if (cardRadio.checked) {
     cardPayment.classList.add('paymentOpen');
-    fakturaPayment.classList.remove('paymentOpen');
+    invoicePayment.classList.remove('paymentOpen');
   }
 }
 
 // Open invoice payment option
 function fakturaPaymentOpen(e) {
   if (invoiceRadio.checked) {
-    fakturaPayment.classList.add('paymentOpen');
+    invoicePayment.classList.add('paymentOpen');
     cardPayment.classList.remove('paymentOpen');
+  } 
+} 
+
+function checkName() {
+  const nametrue = /^[a-zåäöü\-.\s]{2,}$/i.test(formOrderFirstName.value)
+  if (nametrue) {
+    isFirstname = true;
+    /* nameError.innerHTML = `<span class="material-symbols-outlined">
+  check
+  </span>`; */
+  } else if (nametrue !== true) {
+    isFirstname = false;
+    return;
+    // nameError.innerHTML = '  ange namn med minst 2 bokstäver.';
   }
+  checkFormValid();
+  console.log('namnet är', isFirstname);
+  console.log(formOrderFirstName.value);
 }
 
-// Function to check if specifik input is valid
-function checkInputNotEmpty(e) {
-  const getId = e.target.id;
-  const getValue = e.target.value;
-  console.log(e.target.id)
-  console.log(e.target.value)
-
-  if (getId == 'firstname' && getValue !== '') {
-    isFirstname = true;
-    removeError(e);
-  } else if (getId == 'firstname' && getValue == '') {
-    isFirstname = false;
-    addErrorMessage(e, 'Förnamn måste vara ifyllt.');
-    console.log(getID)
-    console.log(getValue)
-  }
-  if (getId == 'lastname' && getValue !== '') {
+function checkLastname() {
+  if (/^[a-zåäöü\-.\s]{2,}$/i.test(formOrderLastName.value)) {
     isLastname = true;
-    removeError(e);
-  } else if (getId == 'lastname' && getValue == '') {
+    /* astnameError.innerHTML = `<span class="material-symbols-outlined">
+  check
+  </span>`; */
+  } else {
     isLastname = false;
-    addErrorMessage(e, 'Efternamn måste vara ifyllt.');
+    return;
+  // lastnameError.innerHTML = ' ange efternamn med minst 2 bokstäver.';
   }
-  if (getId == 'adress' && getValue !== '') {
-    isAdress = true;
-    removeError(e);
-  } else if (getId == 'adress' && getValue == '') {
-    isAdress = false;
-    addErrorMessage(e, 'Adress måste vara ifyllt.');
-  }
-  if (getId == 'zipcode' && getValue !== '') {
-    isZipcode = true;
-    removeError(e);
-  } else if (getId == 'zipcode' && getValue == '') {
-    isZipcode = false;
-    addErrorMessage(e, 'Postnummer måste vara ifyllt.');
-  }
-  if (getId == 'city' && getValue !== '') {
-    isCity = true;
-    removeError(e);
-  } else if (getId == 'city' && getValue == '') {
-    isCity = false;
-    addErrorMessage(e, 'Postort måste vara ifyllt.');
-  }
-  if (getId == 'telephone' && getValue !== '') {
-    isTelephone = true;
-    removeError(e);
-  } else if (getId == 'telephone' && getValue == '') {
-    isTelephone = false;
-    addErrorMessage(e, 'Telefon måste vara ifyllt.');
-  }
-  if (getId == 'email' && getValue !== '') {
-    isEmail = true;
-    removeError(e);
-  } else if (getId == 'email' && getValue == '') {
-    isEmail = false;
-    addErrorMessage(e, 'E-post måste vara ifyllt.');
-  }
-  if (getId == 'debitKredit' && e.target.checked) {
-    isDebitKredit = true;
-    isInvoice = false;
-    document.querySelector('#socialSecurity').required = false;
-  }
-  if (getId == 'invoice' && e.target.checked) {
-    isInvoice = true;
-    isDebitKredit = false;
-    document.querySelector('#socialSecurity').required = true;
-  }
-  if (getId == 'socialSecurity' && !getValue == '') {
-    isSocialSecurity = true;
-    removeError(e);
-  } else if (getId == 'socialSecurity' && getValue == '') {
-    isSocialSecurity = false;
-    addErrorMessage(e, 'Personnummer måste vara ifyllt.');
-  }
-  if (getId == 'gdpr' && e.target.checked) {
-    isGdpr = true;
-  } else if (getId == 'gdpr' && !e.target.checked) {
-    isGdpr = false;
-  }
+  checkFormValid();
 
+  console.log('efternamnet är', isLastname);
+  console.log(formOrderLastName.value);
+}
+
+function checkAdress() {
+  if (
+    /^(?:[A-ZÅÄÖ0-9]+\s)\d{1,}\s{0,7}(?:[A-ZÅÄÖ0-9#])|(?:[A-ZÅÄÖ]+\s){0,3}(?:[A-ZÅÄÖ]+)\s*\d{1,}$/i.test(
+      formOrderAdress.value
+    )
+  ) {
+    isAdress = true;
+    /* adressError.innerHTML = `<span class="material-symbols-outlined">
+  check
+  </span>`; */
+  } else {
+    isAdress = false;
+    return;
+    // adressError.innerHTML = ' ange gata och gatnummer.';
+  }
+  checkFormValid();
+
+  console.log('adress is', isLastname);
+  console.log(formOrderAdress.value);
+}
+
+function checkZip() {
+  if (/^[0-9]{3}\s?[0-9]{2}\s?$/.test(formOrderZipcode.value)) {
+    isZipcode = true;
+    /* zipError.innerHTML = `<span class="material-symbols-outlined">
+    check
+    </span>`; */ 
+  } else {
+    isZipcode = false;
+    return;
+    // zipError.innerHTML = '  ange 5 siffror.';
+  }
+  checkFormValid();
+
+  console.log('zip är', isZipcode);
+  console.log(formOrderZipcode.value);
+}
+
+function checkCity() {
+  if (/^[a-zåäöü\-.\s]{2,}$/i.test(formOrderCity.value)) {
+    isCity = true;
+    /* cityError.innerHTML = `<span class="material-symbols-outlined">
+    check
+    </span>`; */
+  } else {
+    isCity = false;
+    return;
+    // cityError.innerHTML = ' ange postort med minst 2 bokstäver';
+  }
+  checkFormValid();
+  console.log('city är ', isCity);
+  console.log(formOrderCity.value);
+}
+
+function checkPhone() {
+  if (/^(\s*(7)|07)([0-9][ -]*){7}[0-9]$/.test(formOrderPhone.value)) {
+    isTelephone = true;
+    /* phoneError.innerHTML = `<span class="material-symbols-outlined">
+    check
+    </span>`; */
+  } else {
+    isTelephone = false;
+    return;
+    // phoneError.innerHTML = '  ange mobilnummer som börjar på 07 eller 7';
+  }
+  console.log('phone is ', isCity);
+  console.log(formOrderPhone.value);
   checkFormValid();
 }
 
-// Function to check if all inputs are valid, make submit button enabled
-function checkFormValid() {
-  const submitBtn = document.querySelector('#submit');
-  submitBtn.addEventListener('click', specialDelivery);
-  if (
-    isFirstname &&
-    isLastname &&
-    isAdress &&
-    isZipcode &&
-    isCity &&
-    isTelephone &&
-    isEmail &&
-    (isDebitKredit || (isInvoice && isSocialSecurity)) &&
-    isGdpr
-  ) {
-    submitBtn.disabled = false;
+function checkEmail() {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i.test(formOrderEmail.value)) {
+    isEmail = true;
+  /* emailError.innerHTML = `<span class="material-symbols-outlined">
+    check
+    </span>`; */ 
   } else {
-    submitBtn.disabled = true;
+    isEmail = false;
+    return;
+  //  emailError.innerHTML = '  ange giltig epostadress';
   }
+  console.log('email is ', isCity);
+  console.log(formOrderEmail.value);
+  checkFormValid();
 }
 
+function checkInvoice(){
+  isInvoice = true;
+  /*
+  formOrderSocialSecurity.addEventListener('change', checkSocialSecurity);
+  function checkSocialSecurity(){
+    if (/^(19|20)?(\d{6}([-+]|\s)\d{4}|(?!19|20)\d{10})$/.test(formOrderSocialSecurity.value)) {
+      isSocialSecurity = true;
+    /* socialSecurityError.innerHTML = ` <span class="material-symbols-outlined">
+    check
+    </span>`; 
+    } else {
+      isSocialSecurity = false;
+      
+    // socialSecurityError.innerHTML = ` ange giltigt personnummer, 10 eller 12 siffror`;
+    }
+    console.log('id is ', isSocialSecurity);
+    console.log(formOrderSocialSecurity.value);
+    checkFormValid();
+  } */
+  checkFormValid();
+}
+
+
+// Function to check if all inputs are valid, make submit button enabled
+function checkFormValid() { 
+  console.log(isInvoice && isSocialSecurity);
+  submitBtn.addEventListener('click', specialDelivery);
+  
+  if ( isFirstname &&
+     isLastname &&
+     isAdress &&
+     isZipcode &&
+     isCity &&
+     isTelephone &&
+     isEmail &&
+     (isDebitCredit  || (isInvoice && isSocialSecurity)) &&
+    isGdpr
+  )
+  {
+    console.log('allt är dant')
+    submitBtn.removeAttribute('disabled');
+  }
+
+}
+
+/*
 // Function to add error message to non-valid input
 function addErrorMessage(e, string) {
   const getErrorMessage = e.target.parentElement.querySelector('.errorMessage');
-
   e.target.classList.add('error');
-
   const addParagraph = document.createElement('p');
   const addText = document.createTextNode(string);
   addParagraph.appendChild(addText);
   getErrorMessage.appendChild(addParagraph);
 }
-
 // Function to remove error message after input get valid
 function removeError(e) {
   e.target.classList.remove('error');
   e.target.parentElement.querySelector('.errorMessage').innerHTML = '';
 }
+*/
 /** ******************WRITE OUT FORM CONFIRMATION FUNCTION ******************** */
 
 function writeOutFormConfirmation() {
@@ -885,9 +989,6 @@ function writeOutSortProducts() {
   const sortByPrice = document.querySelector('#sortByPrice');
   const sortByCategory = document.querySelector('#sortByCategory');
 
-  // MessageBox for -sorting message
-  const sortByHeading = document.querySelector('#sortByheading');
-
   //  Adding eventlisteners to buttons
   sortByName.addEventListener('click', sortByNameBtn);
   sortByGrade.addEventListener('click', sortByGradeBtn);
@@ -896,22 +997,24 @@ function writeOutSortProducts() {
 }
 
 function sortByNameBtn() {
+  const sortByHeading = document.querySelector('#sortByHeading');
   sortByHeading.innerHTML = `
   <p class="sortByText">Sorterar efter Namn</p>
   `;
   if (nameSort) {
-    donuts.sort((a, b) => a.name < b.name);
+    donuts.sort((a, b) => a.name.localeCompare(b.name));
     nameSort = false;
   } else if (nameSort === false) {
-    donuts.sort((a, b) => a.name > b.name);
+    donuts.sort((a, b) => b.name.localeCompare(a.name));
     nameSort = true;
   }
   writeOutDonuts();
 }
 
 function sortByGradeBtn() {
+  const sortByHeading = document.querySelector('#sortByHeading');
   sortByHeading.innerHTML = `
-  <p class="sortByText" >Sorterar efter Betyg</p>
+  <p class="sortByText">Sorterar efter Betyg</p>
   `;
   if (gradeSort) {
     donuts.sort((a, b) => a.rating - b.rating);
@@ -924,6 +1027,7 @@ function sortByGradeBtn() {
 }
 
 function sortByPriceBtn() {
+  const sortByHeading = document.querySelector('#sortByHeading');
   if (priceSort) {
     sortByHeading.innerHTML = `
     <p class="sortByText">Sorterar efter Pris stigande</p>
@@ -941,15 +1045,17 @@ function sortByPriceBtn() {
 }
 
 function sortByCategoryBtn() {
+  const sortByHeading = document.querySelector('#sortByHeading');
   sortByHeading.innerHTML = `
   <p class="sortByText">Sorterar efter Kategori</p>
   `;
 
   if (categorySort) {
-    donuts.sort((a, b) => a.category < b.category);
+    donuts.sort((a, b) => a.category.localeCompare(b.category));
     categorySort = false;
   } else if (categorySort === false) {
-    donuts.reverse();
+    donuts.sort((a, b) => b.category.localeCompare(a.category));
+    categorySort = true;
   }
   writeOutDonuts();
 }
@@ -978,10 +1084,16 @@ formCloseBtn.addEventListener('click', formOrderClose);
 cardRadio.addEventListener('change', cardPaymentOpen);
 invoiceRadio.addEventListener('change', fakturaPaymentOpen);
 
-// Form inputs, add event listeners
-for (let i = 0; i < formOrderInputs.length; i++) {
-  formOrderInputs[i].addEventListener('change', checkInputNotEmpty);
-}
+formOrderFirstName.addEventListener('change', checkName);
+formOrderLastName.addEventListener('change', checkLastname);
+formOrderAdress.addEventListener('change', checkAdress);
+formOrderZipcode.addEventListener('change', checkZip);
+formOrderCity.addEventListener('change', checkCity);
+formOrderPhone.addEventListener('change', checkPhone);
+formOrderEmail.addEventListener('change', checkEmail);
+invoiceRadio.addEventListener('change', checkInvoice);
+// cardRadio.addEventListener('change', checkPaymentCredit);
+
 // Function-call higher donut price on weekend
 specialPriceWeekend();
 // Function-call to write out donuts
