@@ -1,6 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-use-before-define */
-
 /** ****************************************************************************
  ******************************** VARIABLES **************************************
  ******************************************************************************
@@ -171,10 +168,15 @@ const themeToggleCont = document.querySelector('#themeToggle');
 
 const form = document.querySelector('#countDownClear');
 
+// Timer variables
+const startingMinutes = 15;
+totalSeconds = startingMinutes * 60;
+let timerInterval;
+
 // Form open buttons
 const formOpenBtn = document.querySelector('.checkoutButton');
 const formOrder = document.querySelector('.formOrder');
-const formCloseBtn = document.querySelector('.formCloseBtn');
+const formCloseBtn = document.querySelector('.formCloseBtnCnt');
 
 const submitBtn = document.querySelector('#submit');
 
@@ -211,7 +213,6 @@ let isDebitCredit = false;
 let isInvoice = false;
 let isSocialSecurity = false;
 let isGdpr = false;
-
 
 // Declare variable for form confirmation
 const formConfirmation = document.querySelector('#orderConfirmation');
@@ -484,15 +485,22 @@ function printOutShopCart() {
 
   for (let i = 0; i < addShopCartList.length; i++) {
     document.querySelector('#shopCartContent').innerHTML += `
-        <div id="shopCartAddedDiv"><img class="imgInCart" src="${addShopCartList[i].anyImg}" alt="${addShopCartList[i].anyAlt}"  width="55" height="55"></img>
-        <h4 class="text">${addShopCartList[i].anyName}</h4><br>
+      <article class="shopNewItem">
+        <div id="shopCartAddedDiv">
+         <img class="imgInCart" src="${addShopCartList[i].anyImg}" alt="${addShopCartList[i].anyAlt}"  width="55" height="55"></img>
+          <h4 class="text">${addShopCartList[i].anyName}</h4><br>
+        </div>
+        <div class="shopCartAddedDivTwo">
         <p>${addShopCartList[i].anyAmount}st</p>
         <p>${addShopCartList[i].anyPrice}kr/st</p>
         <p>${addShopCartList[i].anySum}kr</p><br>
         <p class="discountMessage">${addShopCartList[i].discountMessage}</p></span>
         <button class="material-symbols-outlined" data-id="${i}">
         delete_forever</button>
-        </div>`;
+        </div>
+      </article>
+        
+        `;
   }
 
   // Remove donuts per article ShopCart
@@ -659,56 +667,65 @@ function christmasSpecial() {
   }
 }
 
-/** ****************** TOGGLE THEME FUNCTIONS ************************************** */
-
-function writeOutToggleTheme() {
-  themeToggleCont.innerHTML += `
-  <div class="themeToggleContainer">
-    <span><i class="fa-solid fa-lightbulb"></i></span>
-     <button class="themeBtn" id="themeBtn"></button>
-    <span><i class="fa-solid fa-lightbulb"></i></span>
-  </div>
-  `;
-  const themeBtn = document.querySelector('#themeBtn');
-  themeBtn.addEventListener('click', toggleTheme);
-}
-
-function toggleTheme() {
-  const themeBtn = document.querySelector('#themeBtn');
-  themeBtn.classList.toggle('themeBtnMove');
-  const colorTheme = document.querySelectorAll('.allColorTheme');
-  const formColorTheme = document.querySelector('.confirmContainer');
-
-  document.body.classList.toggle('darkTheme');
-  formOrder.classList.toggle('darkThemebg');
-  colorTheme.forEach(theme => {
-    theme.classList.toggle('darkTheme');
-  });
-  formColorTheme.classList.toggle('darkThemeBg');
-}
-
 /** ****************** FORM FUNCTIONS ************************************** */
 
 // Open form function
 function formOrderOpen() {
   formOrder.classList.add('formOrderOpen');
   formCloseBtn.classList.add('formCloseBtnOpen');
-  setInterval(clearForm, 15 * 60 * 1000);
+  timerInterval = setInterval(coundownTimer, 1000);
 }
 
-// Function to clear value after timer
+function coundownTimer() {
+  const countdownTimerEl = document.querySelector('#countdownTimer');
+  const liveMinutes = Math.floor(totalSeconds / 60);
+  let liveSeconds = totalSeconds % 60;
+
+  if (liveSeconds < 10) {
+    liveSeconds = `0${liveSeconds}`;
+  } else {
+    liveSeconds;
+  }
+
+  if (totalSeconds > 59) {
+    countdownTimerEl.innerHTML = `${liveMinutes}:${liveSeconds} minuter`;
+  } else {
+    countdownTimerEl.innerHTML = `${liveMinutes}:${liveSeconds} sekunder`;
+  }
+
+  if (totalSeconds === 0) {
+    clearInterval(timerInterval);
+    clearForm();
+    setTimeout(resetTimer, 5000);
+  }
+  totalSeconds--;
+}
+
+function resetTimer() {
+  form.innerHTML = `Var vänlig och fyll i fomuläret inom <span id="countdownTimer">15:00 minuter</span>.`;
+  totalSeconds = startingMinutes * 60;
+  timerInterval = setInterval(coundownTimer, 1000);
+}
+
+// Function to start timer
 function clearForm() {
- 
-  formOrderFirstName.value = '';
-  formOrderLastName.value = '';
-  formOrderAdress.value = '';
-  formOrderZipcode.value = '';
-  formOrderAdress.value = '';
-  formOrderCity.value = '';
-  formOrderPhone.value = '';
-  formOrderEmail.value = '';
-  invoicePayment.value = '';
-  cardPayment.value = '';
+  const fname = document.querySelector('#firstname');
+  const lname = document.querySelector('#lastname');
+  const adress = document.querySelector('#adress');
+  const zipcode = document.querySelector('#zipcode');
+  const city = document.querySelector('#city');
+  const pcode = document.querySelector('#portkod');
+  const telephone = document.querySelector('#telephone');
+  const email = document.querySelector('#email');
+
+  fname.value = '';
+  lname.value = '';
+  adress.value = '';
+  zipcode.value = '';
+  city.value = '';
+  pcode.value = '';
+  telephone.value = '';
+  email.value = '';
 
   // Writing out message when form is cleared
   form.innerHTML = `Det tog för lång tid att fylla i dina uppgifter, du har 15 minuter på dig!`;
@@ -716,8 +733,7 @@ function clearForm() {
 
 // Close form function
 function formOrderClose() {
-  formOrder.classList.remove('formOrderOpen');
-  formCloseBtn.classList.remove('formCloseBtnOpen');
+  window.location.href = window.location.href;
 }
 
 // Open card payment option
@@ -891,7 +907,7 @@ function checkGdpr(){
 // Function to check if all inputs are valid, make submit button enabled
 function checkFormValid() { 
   console.log(isInvoice && isSocialSecurity);
-  submitBtn.addEventListener('click', specialDelivery);
+//  submitBtn.addEventListener('click', specialDelivery);
   (console.log(isGdpr))
   if ( isFirstname &&
      isLastname &&
@@ -947,16 +963,20 @@ function removeError(e) {
 /** ******************WRITE OUT FORM CONFIRMATION FUNCTION ******************** */
 
 function writeOutFormConfirmation() {
+  const formOrderAdress = document.querySelector('#adress').value;
+  const formOrderZipcode = document.querySelector('#zipcode').value;
+  const formOrderCity = document.querySelector('#city').value;
+  
   formConfirmation.innerHTML += `
     <div class="confirmContainer" id="confirmContainer">
     <h2>Orderbekräftelse</h2>
-    <h4>Tack för din order ${formOrderFirstName.value}!</h4>
+    <h4>Tack för din order ${formOrderFirstName}!</h4>
     <div>
         <p>Ordernummer: ${orderNumber}
         <p>Du har beställt:<span class="inhance"> ${total.amount} Stycken munkar</span><p>
         <p>Totalsumman för ordern är:<span class="inhance"> ${total.price} kr </span></p>
         <p>Fraktkostnaden landar på:<span class="inhance"> ${total.freight} kr </span></p>
-        <p>Beställningen kommer levereras till:<span class="inhance"> ${formOrderAdress.value} ${formOrderZipcode.value} ${formOrderCity.value}</span></p>
+        <p>Beställningen kommer levereras till:<span class="inhance"> ${formOrderAdress} ${formOrderZipcode} ${formOrderCity}</span></p>
         <p>${total.delivery}</p>
     </div>
       <button><a href=""index.html">Tillbaka till startsidan</a></button>
@@ -982,6 +1002,21 @@ function specialDelivery() {
   writeOutFormConfirmation();
 }
 
+/******************************* RESET BTN ****************************************/
+
+const resetBtn = document.querySelector('#reset');
+
+resetBtn.addEventListener('click', function resetForm() {
+
+  const formInputs = document.querySelectorAll(
+    '#firstname, #lastname, #adress, #zipcode, #paymentOptions, #city, #portkod, #telephone, #email, #socialSecurity ');
+  formInputs.forEach(input => {
+    input.value = '';
+  });
+  document.getElementById("gdpr").disabled = true;
+
+});
+
 /** ****************** SORT-BY FUNCTIONS ************************************** */
 
 // Function that writes out the HTML
@@ -989,7 +1024,7 @@ function writeOutSortProducts() {
   const sortContainer = document.querySelector('#sortProducts');
 
   sortContainer.innerHTML += `
-  <h3 id="sortBy">Sortera efter</h3>
+  <h2 id="sortBy">Sortera efter</h2>
     <ul aria-labelledby="sortBy">
       <li><button id="sortByName" aria-label="Sortera efter namn"><i class="fa-solid fa-arrow-down-a-z allColorTheme"></i></button></li>
       <li><button id="sortByGrade" aria-label="Sortera efter betyg"><i class="fa-solid fa-star allColorTheme"></i></button></li>
@@ -1075,6 +1110,31 @@ function sortByCategoryBtn() {
   writeOutDonuts();
 }
 
+/** ****************** TOGGLE THEME FUNCTIONS ************************************** */
+
+function writeOutToggleTheme() {
+  themeToggleCont.innerHTML += `
+  <div class="themeToggleContainer">
+    <span><i class="fa-solid fa-lightbulb"></i></span>
+     <button aria-label="Färgtema knapp" class="themeBtn" id="themeBtn"></button>
+    <span><i class="fa-solid fa-lightbulb"></i></span>
+  </div>
+  `;
+  const themeBtn = document.querySelector('#themeBtn');
+  themeBtn.addEventListener('click', toggleTheme);
+}
+
+function toggleTheme() {
+  themeBtn.classList.toggle('themeBtnMove');
+  const colorTheme = document.querySelectorAll('.allColorTheme');
+
+  document.body.classList.toggle('darkTheme');
+  formOrder.classList.toggle('darkThemebg');
+  colorTheme.forEach(theme => {
+    theme.classList.toggle('darkTheme');
+  });
+}
+
 /** ****************************************************************************
  ******************************** LOGIC **************************************
  ******************************************************************************
@@ -1109,7 +1169,6 @@ formOrderEmail.addEventListener('change', checkEmail);
 invoiceRadio.addEventListener('change', checkInvoice);
 cardRadio.addEventListener('change', checkPaymentCredit);
 gdpr.addEventListener('change', checkGdpr);
-
 
 // Function-call higher donut price on weekend
 specialPriceWeekend();

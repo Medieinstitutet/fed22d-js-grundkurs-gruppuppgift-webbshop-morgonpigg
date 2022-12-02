@@ -2,6 +2,11 @@
   box-sizing: border-box;
   font-family: 'Teko', sans-serif;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: $specialBeige;
 }
@@ -9,7 +14,7 @@ body {
 /*************CHRISTMAS SPECIAL******/
 
 body.christmasSpecial {
-  background-image: url('../img/christmas_bg.jpeg') !important;
+  background-image: url("../img/christmas_bg.jpeg") !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
 }
@@ -66,7 +71,11 @@ header {
           display: inline-block;
           height: 1.5rem;
           width: 1.5rem;
+<<<<<<< HEAD
           background-image: url('../img/SVG/donut-bite.svg');
+=======
+          background-image: url("../img/SVG/donut-bite.svg");
+>>>>>>> main
           margin-right: 5px;
         }
 
@@ -104,7 +113,7 @@ header {
           display: inline-block;
           height: 1.5rem;
           width: 1.5rem;
-          background-image: url('/img/svg/donut-bite.svg');
+          background-image: url("../img/SVG/donut-bite.svg");
           margin-right: 5px;
         }
 
@@ -268,34 +277,42 @@ header {
   box-shadow: 0 3px 15px rgb(0 0 0 / 0.2);
 }
 
+.shopNewItem {
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.7);
+}
+
 #shopCartContent div {
   font-size: 1rem;
+  margin: 0;
   display: flex;
-  align-items: flex-start;
+  flex-direction: row;
   justify-content: space-between;
 
   .imgInCart {
     background-size: cover;
     outline: 1px solid black;
-    margin-right: 15px;
-    margin-bottom: 15px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.7);
   }
-  .text {
-    width: 90%;
-    h4 {
-      margin: 0;
-      font-size: 1rem;
-    }
-    p {
-      display: inline;
-      margin-right: 8px;
-    }
-    button {
-      width: 44px;
-      height: 44px;
-      margin: 0;
-      position: absolute;
-      right: 3.5rem;
+}
+.shopCartAddedDivTwo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  p {
+    display: inline;
+    margin-right: 8px;
+    font-weight: 700;
+  }
+  button {
+    width: 44px;
+    height: 40px;
+    margin: 0;
+    background-color: $specialBeige;
+    cursor: pointer;
+    &:hover {
+      background-color: $specialRed;
     }
   }
 }
@@ -326,6 +343,10 @@ header {
 
   .cartTotal {
     width: 100%;
+
+    div.darkTheme {
+      color: #fbf2cf;
+    }
   }
 
   .cartSubtotal {
@@ -344,6 +365,9 @@ header {
     font-size: 2rem;
     font-weight: 900;
     color: #202020;
+  }
+  div.darkTheme {
+    color: #fbf2cf;
   }
   .checkoutLabel {
     margin-top: 1rem;
@@ -446,8 +470,8 @@ header {
 
 .sortProducts {
   padding-top: 20px;
-  h3 {
-    font-size: 1rem;
+  h2 {
+    font-size: 1.2rem;
     margin: auto;
     width: 90%;
     margin-bottom: 7px;
@@ -509,7 +533,6 @@ header {
   min-height: 100vh;
   z-index: 6;
 
-
   input {
     margin: 5px 0 30px 0;
     width: 100%;
@@ -543,13 +566,29 @@ header {
   height: auto;
 }
 
-.formCloseBtn {
+.formCloseBtnCnt {
   position: absolute;
   right: 20px;
+  width: 75px;
+  height: 175px;
+  visibility: hidden;
+  border: 3px solid red;
+
+  p {
+    font-size: 0.8rem;
+    margin-top: 50px;
+    text-align: center;
+    color: red;
+    text-shadow: 0.5px 0.5px 1px black;
+  }
+}
+
+.formCloseBtn {
+  position: absolute;
+  right: 0;
   width: 45px;
   height: 45px;
   border: 3px solid $specialRed;
-  visibility: hidden;
   background-color: $specialLightGreen;
 
   i {
@@ -594,6 +633,7 @@ form {
 input.error {
   border-color: red;
 }
+<<<<<<< HEAD
 
 #gdpr, #newsletter {
   margin: 5px 0 10px 0;
@@ -606,22 +646,37 @@ input.error {
 }
 
 section.darkThemebg {
+=======
+div.darkThemebg {
+>>>>>>> main
   background-color: #302f2a;
 }
 
 div.orderConfirmation {
   .confirmContainer {
     margin-left: 15%;
+<<<<<<< HEAD
     background-color: $specialRed;
+=======
+    background-color: #944242;
+>>>>>>> main
     width: 70%;
     min-height: 60vh;
     position: fixed;
     top: 200px;
+<<<<<<< HEAD
     z-index: 7;
+=======
+    z-index: 6;
+>>>>>>> main
     display: block;
     outline: 2px solid rgba(0, 0, 0, 0.7);
     box-shadow: 0 3px 15px rgba(0, 0, 0, 0.7);
     text-align: center;
+<<<<<<< HEAD
+=======
+    padding: 30px;
+>>>>>>> main
 
     div {
       p {
@@ -645,10 +700,25 @@ div.orderConfirmation {
         color: black;
       }
     }
+<<<<<<< HEAD
   }
   div.darkThemeBg {
     background-color: #3b1919;
   }
+=======
+  }
+}
+.formBtn{
+  background-color: $specialGreen;
+  padding: 10px;
+  border: 2px solid $specialRed;
+  box-shadow: 0 3px 15px rgba(0,0,0, 0.7);
+  cursor: pointer;
+  &:hover{
+    background-color: $specialRed;
+    border: 2px solid $specialGreen;
+  }
+>>>>>>> main
 }
 
 /*************PRODUKTKORT*************/
@@ -719,6 +789,8 @@ div.orderConfirmation {
     background: transparent;
     color: transparentize(#000000, 0.3);
     transition: color 0.3s ease-in-out;
+    position: relative;
+    top: 120px;
     &:hover {
       color: #000;
       text-shadow: 0 3px 5px rgb(0, 0, 0);
@@ -761,7 +833,6 @@ div.orderConfirmation {
         width: 35px;
         margin-top: 15px;
         margin-bottom: 20px;
-        outline: none;
         border: none;
         cursor: pointer;
         background-color: $specialRed;
@@ -827,4 +898,8 @@ a.darkTheme {
 }
 div.darkTheme {
   background-color: #4b5947;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main
