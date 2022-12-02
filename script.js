@@ -740,9 +740,9 @@ function checkName() {
   const nameTrue = /^[a-zåäöü\-.\s]{2,}$/i.test(formOrderFirstName.value)
   if (nameTrue) {
     isFirstname = true;
-    document.querySelector('.nameError').innerHTML = ('');
+    document.querySelector('#nameError').innerHTML = ('');
   } else {
-      document.querySelector('.nameError').innerHTML = ('Fyll i ditt namn med bokstäver.');
+      document.querySelector('#nameError').innerHTML = ('Fyll i ditt namn med bokstäver.');
     return;
   }
   checkFormValid();
@@ -753,9 +753,9 @@ function checkName() {
 function checkLastname() {
   if (/^[a-zåäöü\-.\s]{2,}$/i.test(formOrderLastName.value)) {
     isLastname = true;
-    document.querySelector('.lastnameError').innerHTML = ('');
-} else {
-    document.querySelector('.lastnameError').innerHTML = ('Fyll i ditt efternamn med bokstäver.');
+    document.querySelector('#lastnameError').innerHTML = ('');
+  } else {
+    document.querySelector('#lastnameError').innerHTML = ('Fyll i ditt efternamn med bokstäver.');
     return;
   }
   checkFormValid();
@@ -771,9 +771,10 @@ function checkAdress() {
     )
   ) {
     isAdress = true;
-    document.querySelector('.adressError').innerHTML = ('');
+    document.querySelector('#adressError').innerHTML = ('');
   } else {
-      document.querySelector('.adressError').innerHTML = ('Fyll i ditt namn med bokstäver.');
+    isAdress = false;
+    document.querySelector('#adressError').innerHTML = ('Fyll i giltig adress.');
       return;
     // adressError.innerHTML = ' ange gata och gatnummer.';
   }
@@ -786,13 +787,11 @@ function checkAdress() {
 function checkZip() {
   if (/^[0-9]{3}\s?[0-9]{2}\s?$/.test(formOrderZipcode.value)) {
     isZipcode = true;
-    /* zipError.innerHTML = `<span class="material-symbols-outlined">
-    check
-    </span>`; */ 
+    document.querySelector('#zipError').innerHTML = ('');
   } else {
     isZipcode = false;
+    document.querySelector('#zipError').innerHTML = ('ange postnummer som 5 siffror');
     return;
-    // zipError.innerHTML = '  ange 5 siffror.';
   }
   checkFormValid();
 
@@ -803,13 +802,11 @@ function checkZip() {
 function checkCity() {
   if (/^[a-zåäöü\-.\s]{2,}$/i.test(formOrderCity.value)) {
     isCity = true;
-    /* cityError.innerHTML = `<span class="material-symbols-outlined">
-    check
-    </span>`; */
+    document.querySelector('#cityError').innerHTML = ('');
   } else {
     isCity = false;
+    document.querySelector('#cityError').innerHTML = ('ange postort med minst 2 bokstäver');
     return;
-    // cityError.innerHTML = ' ange postort med minst 2 bokstäver';
   }
   checkFormValid();
   console.log('city är ', isCity);
@@ -819,15 +816,13 @@ function checkCity() {
 function checkPhone() {
   if (/^(\s*(7)|07)([0-9][ -]*){7}[0-9]$/.test(formOrderPhone.value)) {
     isTelephone = true;
-    /* phoneError.innerHTML = `<span class="material-symbols-outlined">
-    check
-    </span>`; */
+    document.querySelector('#phoneError').innerHTML = ('');
   } else {
     isTelephone = false;
+    document.querySelector('#phoneError').innerHTML = ('ange mobilnummer som börjar på 07');
     return;
-    // phoneError.innerHTML = '  ange mobilnummer som börjar på 07 eller 7';
   }
-  console.log('phone is ', isCity);
+  console.log('phone is ', isPhone);
   console.log(formOrderPhone.value);
   checkFormValid();
 }
@@ -835,13 +830,11 @@ function checkPhone() {
 function checkEmail() {
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i.test(formOrderEmail.value)) {
     isEmail = true;
-  /* emailError.innerHTML = `<span class="material-symbols-outlined">
-    check
-    </span>`; */ 
+    document.querySelector('#emailError').innerHTML = ('');
   } else {
     isEmail = false;
+    document.querySelector('#emailError').innerHTML = ('ange giltig epostadress');
     return;
-  //  emailError.innerHTML = '  ange giltig epostadress';
   }
   console.log('email is ', isEmail);
   console.log(formOrderEmail.value);
@@ -863,13 +856,11 @@ function checkInvoice(){
   function checkSocialSecurity(){
     if (/^(19|20)?(\d{6}([-+]|\s)\d{4}|(?!19|20)\d{10})$/.test(formOrderSocialSecurity.value)) {
       isSocialSecurity = true;
-    /* socialSecurityError.innerHTML = ` <span class="material-symbols-outlined"> 
-    check
-    </span>`; */
+      document.querySelector('.#socialError').innerHTML = ('');
     } else {
+      document.querySelector('#socialError').innerHTML = ('ange giltigt personnummer, 10 eller 12 siffror');
       isSocialSecurity = false;
-      
-    // socialSecurityError.innerHTML = ` ange giltigt personnummer, 10 eller 12 siffror`;
+      return;
     }
     console.log('id is ', isSocialSecurity);
     console.log(formOrderSocialSecurity.value);
@@ -918,7 +909,6 @@ function checkFormValid() {
   else {
     submitBtn.disabled = true;
   }
-
 }
 
 /******************************* RESET BTN ****************************************/
@@ -933,8 +923,7 @@ resetBtn.addEventListener('click', function resetForm() {
   formInputs.forEach(input => {
     input.value = '';
   });
-  document.getElementById("gdpr").checked = false;
-  
+  document.querySelector('#gdpr').checked = false;
 });
 
 /***********************************************************************/

@@ -515,7 +515,7 @@ header {
     width: 100%;
   }
 
-  label div {
+  .error {
     position: absolute;
     margin-top: -25px;
     font-size: small;
@@ -584,7 +584,7 @@ form {
   width: auto;
 }
 
-.errorMessage, label div {
+.error {
   color: red;
 
   p {
