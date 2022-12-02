@@ -930,7 +930,7 @@ function checkFormValid() {
 }
 
 /******************************* RESET BTN ****************************************/
-
+//make it work. sen target input.values.
 const resetBtn = document.querySelector('#reset');
 
 resetBtn.addEventListener('click', function resetForm() {
