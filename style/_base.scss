@@ -584,7 +584,7 @@ form {
   width: auto;
 }
 
-.errorMessage {
+.errorMessage, label div {
   color: red;
 
   p {
@@ -603,8 +603,8 @@ input.error {
 #reset {
   margin-bottom:100px;
   width: 100%;
-
 }
+
 section.darkThemebg {
   background-color: #302f2a;
 }
