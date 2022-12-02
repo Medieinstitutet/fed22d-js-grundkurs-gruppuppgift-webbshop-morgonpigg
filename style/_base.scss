@@ -35,7 +35,9 @@ header {
   height: 75px;
   position: fixed;
   padding: 0 20px;
-  z-index: 8;
+
+  z-index: 7;
+
   background-color: $specialRed;
   display: flex;
   justify-content: space-between;
@@ -71,11 +73,7 @@ header {
           display: inline-block;
           height: 1.5rem;
           width: 1.5rem;
-<<<<<<< HEAD
-          background-image: url('../img/SVG/donut-bite.svg');
-=======
           background-image: url("../img/SVG/donut-bite.svg");
->>>>>>> main
           margin-right: 5px;
         }
 
@@ -201,7 +199,7 @@ header {
   top: 5px;
 }
 
-/*************VARUKORG*************/
+/*************SHOPPING CART*************/
 
 #sectionShoppingCart {
   display: none;
@@ -466,7 +464,7 @@ header {
     }
   }
 }
-/*****SORTERA EFTER*********/
+/*****SORT BY*********/
 
 .sortProducts {
   padding-top: 20px;
@@ -528,20 +526,14 @@ header {
   bottom: 0;
   padding: 20px 20%;
   overflow: auto;
-  visibility: visible;
-  width: 100%;
-  min-height: 100vh;
+  visibility: hidden;
+  width: 1px;
+  height: 1px;
   z-index: 6;
 
   input {
     margin: 5px 0 30px 0;
-    width: 100%;
-  }
-
-  .error {
-    position: absolute;
-    margin-top: -25px;
-    font-size: small;
+    width: 90%;
   }
 
   fieldset {
@@ -550,14 +542,14 @@ header {
     input {
       margin: 5px 0;
       width: auto;
-
       }
-    }
   }
 
-
-#submit {
-  margin-bottom: 5px;
+  .error {
+    position: absolute;
+    margin-top: -25px;
+    font-size: small;
+  }
 }
 
 .formOrderOpen {
@@ -611,7 +603,7 @@ form {
 }
 
 .cardPayment,
-.invoicePayment {
+.fakturaPayment {
   visibility: hidden;
   width: 1px;
   height: 1px;
@@ -630,53 +622,34 @@ form {
     margin: 0;
   }
 }
+
 input.error {
   border-color: red;
 }
-<<<<<<< HEAD
 
 #gdpr, #newsletter {
   margin: 5px 0 10px 0;
   width: auto;
-
-}
-#reset {
-  margin-bottom:100px;
-  width: 100%;
 }
 
-section.darkThemebg {
-=======
 div.darkThemebg {
->>>>>>> main
   background-color: #302f2a;
 }
 
 div.orderConfirmation {
   .confirmContainer {
     margin-left: 15%;
-<<<<<<< HEAD
-    background-color: $specialRed;
-=======
     background-color: #944242;
->>>>>>> main
     width: 70%;
     min-height: 60vh;
     position: fixed;
     top: 200px;
-<<<<<<< HEAD
-    z-index: 7;
-=======
     z-index: 6;
->>>>>>> main
     display: block;
     outline: 2px solid rgba(0, 0, 0, 0.7);
     box-shadow: 0 3px 15px rgba(0, 0, 0, 0.7);
     text-align: center;
-<<<<<<< HEAD
-=======
     padding: 30px;
->>>>>>> main
 
     div {
       p {
@@ -700,25 +673,22 @@ div.orderConfirmation {
         color: black;
       }
     }
-<<<<<<< HEAD
-  }
-  div.darkThemeBg {
-    background-color: #3b1919;
-  }
-=======
   }
 }
+
 .formBtn{
   background-color: $specialGreen;
   padding: 10px;
   border: 2px solid $specialRed;
   box-shadow: 0 3px 15px rgba(0,0,0, 0.7);
   cursor: pointer;
+  width: 90%;
+  display:block;
+
   &:hover{
     background-color: $specialRed;
     border: 2px solid $specialGreen;
   }
->>>>>>> main
 }
 
 /*************PRODUKTKORT*************/
@@ -898,8 +868,4 @@ a.darkTheme {
 }
 div.darkTheme {
   background-color: #4b5947;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main

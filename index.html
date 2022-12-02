@@ -155,7 +155,6 @@
             <span>Postort:*</span><br>
             <input type="text" id="city" name="city" required><br>
             <span class="error" id="cityError"></span>
-
           </label>
 
           <label>
@@ -167,7 +166,6 @@
             <span>Telefon(mobil):*</span><br>
             <input type="tel" id="telephone" name="telephone" required><br>
             <span class="error" id="phoneError"></span>
-
           </label>
 
           <label>
@@ -202,14 +200,14 @@
             </label>
 
             <label>
-              <span>CVC:</span><br>
+              <span>CVC:</span><br />
               <input type="number" name="cardSecurity" id="cardSecurity">
             </label>
           </div>
 
           <div class="invoicePayment">
             <label>
-              <span class="errorMessage"></span>
+              <span class="errorId"></span>
               <span>Personnummer:*</span><br>
               <input
                 type="text"
@@ -219,7 +217,7 @@
                 maxlength="10"
                 placeholder="ÅÅMMDDXXXX"
               >
-              <span class="error" id="socialError"></span>
+              
             </label>
           </div>
         </fieldset>
@@ -232,18 +230,7 @@
         <label>
           <input type="checkbox" id="newsletter" name="newsletter" checked>
           <span>Få vårat nyhetsbrev en gång i veckan för alla nyheter och erbjudanden.</span><br>
-          <input type="checkbox" id="newsletter" name="newsletter" checked />
-          <span>Få vårat nyhetsbrev en gång i veckan för alla nyheter och erbjudanden.</span><br/>
         </label>
-        <input type="submit" id="submit" value="Skicka order!" disabled><br>
-      </form>
-      <button id="reset" >Rensa Formulär</button><br>
-    </div>
-
-    <!--   CONFIRMCONTAINER FORM-->
-
-    <div id="orderConfirmation" class="orderConfirmation"></div>
-
         <input class="formBtn" type="submit" id="submit" value="Skicka order!" disabled>
       </form>
       <button class="formBtn" id="reset" >Rensa Formulär</button><br>

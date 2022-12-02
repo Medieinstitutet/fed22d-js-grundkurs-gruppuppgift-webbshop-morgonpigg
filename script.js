@@ -165,6 +165,18 @@ const themeToggleCont = document.querySelector('#themeToggle');
 /** ****************** FORM VARIABLES ************************************** */
 
 // Form inputs
+const submitBtn = document.querySelector('#submit');
+
+const formOrderFirstName = document.querySelector('#firstname');
+const formOrderLastName = document.querySelector('#lastname');
+const formOrderAdress = document.querySelector('#adress');
+const formOrderZipcode = document.querySelector('#zipcode');
+const formOrderCity = document.querySelector('#city');
+const formOrderPhone = document.querySelector('#telephone');
+const formOrderEmail = document.querySelector('#email');
+const formOrderSocialSecurity = document.querySelector('#socialSecurity');
+const gdpr = document.querySelector('#gdpr');
+const newsletter = document.querySelector('#newsletter');
 
 const form = document.querySelector('#countDownClear');
 
@@ -178,30 +190,15 @@ const formOpenBtn = document.querySelector('.checkoutButton');
 const formOrder = document.querySelector('.formOrder');
 const formCloseBtn = document.querySelector('.formCloseBtnCnt');
 
-const submitBtn = document.querySelector('#submit');
-
-const formOrderFirstName = document.querySelector('#firstname');
-const formOrderLastName = document.querySelector('#lastname');
-const formOrderAdress = document.querySelector('#adress');
-const formOrderZipcode = document.querySelector('#zipcode');
-const formOrderCity = document.querySelector('#city');
-const formOrderPhone = document.querySelector('#telephone');
-const formOrderEmail = document.querySelector('#email');
-
-// Card/invoice buttons 
+// Card/invoice buttons
 const cardRadio = document.querySelector('#debitCredit');
 const invoiceRadio = document.querySelector('#invoice');
 
 // Card/invoice inputs
 const cardPayment = document.querySelector('.cardPayment');
-const invoicePayment = document.querySelector('.invoicePayment');
+const fakturaPayment = document.querySelector('.fakturaPayment');
 
-const formOrderSocialSecurity = document.querySelector('#socialSecurity');
-
-const gdpr = document.querySelector('#gdpr');
-const newsletter = document.querySelector('#newsletter');
-
-
+// Declare boolean variables for every validated input
 let isFirstname = false;
 let isLastname = false;
 let isAdress = false;
@@ -216,6 +213,7 @@ let isGdpr = false;
 
 // Declare variable for form confirmation
 const formConfirmation = document.querySelector('#orderConfirmation');
+
 // Declare a variable for random ordernumber
 const orderNumber = Math.round(Math.random() * 100000);
 
@@ -614,7 +612,7 @@ function luciaSpecial() {
     if (addShopCartList.length > 0 && luciaIndex === -1) {
       addShopCartList.push({
         anyPrice: 0,
-        anyImg: 'img/donuts_img/lucia-donut.jpg',
+        anyImg: 'img/donuts_img/white.jpg',
         anyAlt: 'Luciamunk',
         anyName: 'Luciamunk',
         anyAmount: 1,
@@ -740,17 +738,17 @@ function formOrderClose() {
 function cardPaymentOpen(e) {
   if (cardRadio.checked) {
     cardPayment.classList.add('paymentOpen');
-    invoicePayment.classList.remove('paymentOpen');
+    fakturaPayment.classList.remove('paymentOpen');
   }
 }
 
 // Open invoice payment option
 function fakturaPaymentOpen(e) {
   if (invoiceRadio.checked) {
-    invoicePayment.classList.add('paymentOpen');
+    fakturaPayment.classList.add('paymentOpen');
     cardPayment.classList.remove('paymentOpen');
-  } 
-} 
+  }
+}
 
 function checkName() {
   const nameTrue = /^[a-zåäöü\-.\s]{2,}$/i.test(formOrderFirstName.value)
@@ -904,10 +902,11 @@ function checkGdpr(){
   checkFormValid();
 }
 
+
 // Function to check if all inputs are valid, make submit button enabled
 function checkFormValid() { 
   console.log(isInvoice && isSocialSecurity);
-//  submitBtn.addEventListener('click', specialDelivery);
+  submitBtn.addEventListener('click', specialDelivery);
   (console.log(isGdpr))
   if ( isFirstname &&
      isLastname &&
@@ -927,39 +926,23 @@ function checkFormValid() {
   }
 }
 
-/******************************* RESET BTN ****************************************/
-//make it work. sen target input.values.
-const resetBtn = document.querySelector('#reset');
+// // Function to add error message to non-valid input
+// function addErrorMessage(e, string) {
+//   const getErrorMessage = e.target.parentElement.querySelector('.errorMessage');
 
-resetBtn.addEventListener('click', function resetForm() {
+//   e.target.classList.add('error');
 
-  const formInputs = document.querySelectorAll(
-    '#firstname, #lastname, #adress, #zipcode, #city, #telephone, #email, #socialSecurity ');
-    //lägg till att radio + gdpr ska vara false
-  formInputs.forEach(input => {
-    input.value = '';
-  });
-  document.querySelector('#gdpr').checked = false;
-});
+//   const addParagraph = document.createElement('p');
+//   const addText = document.createTextNode(string);
+//   addParagraph.appendChild(addText);
+//   getErrorMessage.appendChild(addParagraph);
+// }
 
-/***********************************************************************/
-
-/*
-// Function to add error message to non-valid input
-function addErrorMessage(e, string) {
-  const getErrorMessage = e.target.parentElement.querySelector('.errorMessage');
-  e.target.classList.add('error');
-  const addParagraph = document.createElement('p');
-  const addText = document.createTextNode(string);
-  addParagraph.appendChild(addText);
-  getErrorMessage.appendChild(addParagraph);
-}
-// Function to remove error message after input get valid
-function removeError(e) {
-  e.target.classList.remove('error');
-  e.target.parentElement.querySelector('.errorMessage').innerHTML = '';
-}
-*/
+// // Function to remove error message after input get valid
+// function removeError(e) {
+//   e.target.classList.remove('error');
+//   e.target.parentElement.querySelector('.errorMessage').innerHTML = '';
+// }
 /** ******************WRITE OUT FORM CONFIRMATION FUNCTION ******************** */
 
 function writeOutFormConfirmation() {
@@ -1170,6 +1153,10 @@ invoiceRadio.addEventListener('change', checkInvoice);
 cardRadio.addEventListener('change', checkPaymentCredit);
 gdpr.addEventListener('change', checkGdpr);
 
+// Form inputs, add event listeners
+// for (let i = 0; i < formOrderInputs.length; i++) {
+//   formOrderInputs[i].addEventListener('change', checkInputNotEmpty);
+// }
 // Function-call higher donut price on weekend
 specialPriceWeekend();
 // Function-call to write out donuts
