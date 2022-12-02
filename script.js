@@ -737,16 +737,13 @@ function fakturaPaymentOpen(e) {
 } 
 
 function checkName() {
-  const nametrue = /^[a-zåäöü\-.\s]{2,}$/i.test(formOrderFirstName.value)
-  if (nametrue) {
+  const nameTrue = /^[a-zåäöü\-.\s]{2,}$/i.test(formOrderFirstName.value)
+  if (nameTrue) {
     isFirstname = true;
-    /* nameError.innerHTML = `<span class="material-symbols-outlined">
-  check
-  </span>`; */
-  } else if (nametrue !== true) {
-    isFirstname = false;
+    document.querySelector('.nameError').innerHTML = ('');
+  } else {
+      document.querySelector('.nameError').innerHTML = ('Fyll i ditt namn med bokstäver.');
     return;
-    // nameError.innerHTML = '  ange namn med minst 2 bokstäver.';
   }
   checkFormValid();
   console.log('namnet är', isFirstname);
@@ -756,13 +753,10 @@ function checkName() {
 function checkLastname() {
   if (/^[a-zåäöü\-.\s]{2,}$/i.test(formOrderLastName.value)) {
     isLastname = true;
-    /* astnameError.innerHTML = `<span class="material-symbols-outlined">
-  check
-  </span>`; */
-  } else {
-    isLastname = false;
+    document.querySelector('.lastnameError').innerHTML = ('');
+} else {
+    document.querySelector('.lastnameError').innerHTML = ('Fyll i ditt efternamn med bokstäver.');
     return;
-  // lastnameError.innerHTML = ' ange efternamn med minst 2 bokstäver.';
   }
   checkFormValid();
 
@@ -777,12 +771,10 @@ function checkAdress() {
     )
   ) {
     isAdress = true;
-    /* adressError.innerHTML = `<span class="material-symbols-outlined">
-  check
-  </span>`; */
+    document.querySelector('.adressError').innerHTML = ('');
   } else {
-    isAdress = false;
-    return;
+      document.querySelector('.adressError').innerHTML = ('Fyll i ditt namn med bokstäver.');
+      return;
     // adressError.innerHTML = ' ange gata och gatnummer.';
   }
   checkFormValid();
@@ -941,6 +933,8 @@ resetBtn.addEventListener('click', function resetForm() {
   formInputs.forEach(input => {
     input.value = '';
   });
+  document.getElementById("gdpr").checked = false;
+  
 });
 
 /***********************************************************************/

@@ -117,15 +117,15 @@
 
         <div class="flexForm">
           <label>
-            <div class="nameError"></div>
             <span>Förnamn:*</span><br />
-            <input type="text" id="firstname" name="firstname" required /><br />
+            <input type="text" id="firstname" name="firstname" required /><br>
+            <div class="nameError"></div>
           </label>
 
           <label>
-            <span class="errorMessage"></span>
             <span>Efternamn:*</span><br />
             <input type="text" id="lastname" name="lastname" required /><br />
+            <div class="lastnameError"></div>
           </label>
 
           <label>
@@ -228,12 +228,12 @@
           <input type="checkbox" id="newsletter" name="newsletter" checked />
           <span>Få vårat nyhetsbrev en gång i veckan för alla nyheter och erbjudanden.</span><br />
         </label>
+        <input type="submit" id="submit" value="Skicka order!" disabled></button><br>
       </form>
-      <button type="submit" id="submit" value="Skicka order!" disabled>Skicka order!</button><br>
       <button id="reset" >Rensa Formulär</button><br>
     </div>
 
-    <!--   CONFIRMCONFAINER FORM-->
+    <!--   CONFIRMCONTAINER FORM-->
 
     <div id="orderConfirmation" class="orderConfirmation"></div>
 
