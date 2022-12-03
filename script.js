@@ -996,7 +996,7 @@ resetBtn.addEventListener('click', function resetForm() {
   formInputs.forEach(input => {
     input.value = '';
   });
-  document.getElementById("gdpr").disabled = true;
+  document.getElementById("gdpr").checked = true;
 
 });
 
