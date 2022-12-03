@@ -779,7 +779,7 @@ function checkLastname() {
 
 function checkAdress() {
   if (
-    /^(?:[A-ZÅÄÖ0-9]+\s)\d{1,}\s{0,7}(?:[A-ZÅÄÖ0-9#])|(?:[A-ZÅÄÖ]+\s){0,3}(?:[A-ZÅÄÖ]+)\s*\d{1,}$/i.test(
+    /^(^[a-zåäöA-ZÅÄÖ  *]*$)|(?:[A-ZÅÄÖ0-9]+\s)\d{1,}\s{0,7}(?:[A-ZÅÄÖ0-9#])|(?:[A-ZÅÄÖ]+\s){0,3}(?:[A-ZÅÄÖ]+)\s*\d{1,}$/i.test(
       formOrderAdress.value
     )
   ) {
