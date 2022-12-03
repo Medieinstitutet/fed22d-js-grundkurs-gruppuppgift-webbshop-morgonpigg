@@ -196,7 +196,7 @@ const invoiceRadio = document.querySelector('#invoice');
 
 // Card/invoice inputs
 const cardPayment = document.querySelector('.cardPayment');
-const fakturaPayment = document.querySelector('.fakturaPayment');
+const invoicePayment = document.querySelector('.invoicePayment');
 
 // Declare boolean variables for every validated input
 let isFirstname = false;
@@ -738,14 +738,14 @@ function formOrderClose() {
 function cardPaymentOpen(e) {
   if (cardRadio.checked) {
     cardPayment.classList.add('paymentOpen');
-    fakturaPayment.classList.remove('paymentOpen');
+    invoicePayment.classList.remove('paymentOpen');
   }
 }
 
 // Open invoice payment option
-function fakturaPaymentOpen(e) {
+function invoicePaymentOpen(e) {
   if (invoiceRadio.checked) {
-    fakturaPayment.classList.add('paymentOpen');
+    invoicePayment.classList.add('paymentOpen');
     cardPayment.classList.remove('paymentOpen');
   }
 }
@@ -1140,7 +1140,7 @@ discountCodeBtn.addEventListener('click', superDiscountCode);
 formOpenBtn.addEventListener('click', formOrderOpen);
 formCloseBtn.addEventListener('click', formOrderClose);
 cardRadio.addEventListener('change', cardPaymentOpen);
-invoiceRadio.addEventListener('change', fakturaPaymentOpen);
+invoiceRadio.addEventListener('change', invoicePaymentOpen);
 
 formOrderFirstName.addEventListener('change', checkName);
 formOrderLastName.addEventListener('change', checkLastname);
