@@ -172,6 +172,7 @@ const formOrderLastName = document.querySelector('#lastname');
 const formOrderAdress = document.querySelector('#adress');
 const formOrderZipcode = document.querySelector('#zipcode');
 const formOrderCity = document.querySelector('#city');
+const formOrderPcode = document.querySelector('#pCode');
 const formOrderPhone = document.querySelector('#telephone');
 const formOrderEmail = document.querySelector('#email');
 const formOrderSocialSecurity = document.querySelector('#socialSecurity');
@@ -700,30 +701,23 @@ function coundownTimer() {
 }
 
 function resetTimer() {
-  form.innerHTML = `Var vänlig och fyll i fomuläret inom <span id="countdownTimer">15:00 minuter</span>.`;
+  form.innerHTML = `Var vänlig och fyll i formuläret inom <span id="countdownTimer">15:00 minuter</span>.`;
   totalSeconds = startingMinutes * 60;
   timerInterval = setInterval(coundownTimer, 1000);
 }
 
 // Function to start timer
 function clearForm() {
-  const fname = document.querySelector('#firstname');
-  const lname = document.querySelector('#lastname');
-  const adress = document.querySelector('#adress');
-  const zipcode = document.querySelector('#zipcode');
-  const city = document.querySelector('#city');
-  const pcode = document.querySelector('#portkod');
-  const telephone = document.querySelector('#telephone');
-  const email = document.querySelector('#email');
 
-  fname.value = '';
-  lname.value = '';
-  adress.value = '';
-  zipcode.value = '';
-  city.value = '';
-  pcode.value = '';
-  telephone.value = '';
-  email.value = '';
+  formOrderFirstName.value = '';
+  formOrderLastName.value = '';
+  formOrderAdress.value = '';
+  formOrderZipcode.value = '';
+  formOrderCity.value = '';
+  formOrderPcode.value = '';
+  formOrderPhone.value = '';
+  formOrderEmail.value = '';
+  formOrderSocialSecurity.value = '';
 
   // Writing out message when form is cleared
   form.innerHTML = `Det tog för lång tid att fylla i dina uppgifter, du har 15 minuter på dig!`;
@@ -856,10 +850,9 @@ function checkEmail() {
 
 function checkInvoice(){
   isInvoice = true;
-  if(isInvoice = true) {
+  if (isInvoice = true) {
     isDebitCredit = false;
   }
-
   console.log(isInvoice);
   checkFormValid();
 
@@ -883,7 +876,7 @@ function checkInvoice(){
 
 function checkPaymentCredit(){
   isDebitCredit = true;
-  if(isDebitCredit) {
+  if (isDebitCredit) {
     isInvoice = false;
   }
 
@@ -892,7 +885,7 @@ function checkPaymentCredit(){
 }
 
 function checkGdpr(){
-  if(gdpr.checked) {
+  if (gdpr.checked) {
     isGdpr = true;
   } else {
     isGdpr= false
@@ -945,21 +938,17 @@ function checkFormValid() {
 /** ******************WRITE OUT FORM CONFIRMATION FUNCTION ******************** */
 
 function writeOutFormConfirmation() {
-  const formOrderFirstName = document.querySelector('#firstname').value;
-  const formOrderAdress = document.querySelector('#adress').value;
-  const formOrderZipcode = document.querySelector('#zipcode').value;
-  const formOrderCity = document.querySelector('#city').value;
   
   formConfirmation.innerHTML += `
     <div class="confirmContainer" id="confirmContainer">
     <h2>Orderbekräftelse</h2>
-    <h4>Tack för din order ${formOrderFirstName}!</h4>
+    <h4>Tack för din order ${formOrderFirstName.value}!</h4>
     <div>
         <p>Ordernummer: ${orderNumber}
         <p>Du har beställt:<span class="inhance"> ${total.amount} Stycken munkar</span><p>
         <p>Totalsumman för ordern är:<span class="inhance"> ${total.price} kr </span></p>
         <p>Fraktkostnaden landar på:<span class="inhance"> ${total.freight} kr </span></p>
-        <p>Beställningen kommer levereras till:<span class="inhance"> ${formOrderAdress} ${formOrderZipcode} ${formOrderCity}</span></p>
+        <p>Beställningen kommer levereras till:<span class="inhance"> ${formOrderAdress.value} ${formOrderZipcode.value} ${formOrderCity.value}</span></p>
         <p>${total.delivery}</p>
     </div>
       <button><a href=""index.html">Tillbaka till startsidan</a></button>
@@ -992,7 +981,7 @@ const resetBtn = document.querySelector('#reset');
 resetBtn.addEventListener('click', function resetForm() {
 
   const formInputs = document.querySelectorAll(
-    '#firstname, #lastname, #adress, #zipcode, #paymentOptions, #city, #portkod, #telephone, #email, #socialSecurity, .error ');
+    '#firstname, #lastname, #adress, #zipcode, #city, #pCode, #telephone, #email, #socialSecurity, .error ');
   formInputs.forEach(input => {
     input.value = '';
   });
@@ -1000,7 +989,6 @@ resetBtn.addEventListener('click', function resetForm() {
     gdpr.checked = false;
   } else {
     gdpr.checked = true;
-
   }
 });
 
