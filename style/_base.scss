@@ -543,6 +543,9 @@ header {
       margin: 5px 0;
       width: auto;
       }
+    .invoicePayment {
+      margin-bottom: 30px;
+    }
   }
 
   .error {
@@ -550,6 +553,10 @@ header {
     margin-top: -25px;
     font-size: small;
   }
+
+  #socialError {
+    margin-top: -20px;
+    }
 }
 
 .formOrderOpen {

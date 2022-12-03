@@ -751,8 +751,7 @@ function invoicePaymentOpen(e) {
 }
 
 function checkName() {
-  const nameTrue = /^[a-zåäöü\-.\s]{2,}$/i.test(formOrderFirstName.value)
-  if (nameTrue) {
+  if ( /^[a-zåäöü\-.\s]{2,}$/i.test(formOrderFirstName.value)) {
     isFirstname = true;
     document.querySelector('#nameError').innerHTML = ('');
   } else {
@@ -833,7 +832,7 @@ function checkPhone() {
     document.querySelector('#phoneError').innerHTML = ('');
   } else {
     isTelephone = false;
-    document.querySelector('#phoneError').innerHTML = ('ange mobilnummer som börjar på 07');
+    document.querySelector('#phoneError').innerHTML = ('ange giltigt mobilnummer.');
     return;
   }
   console.log('phone is ', isPhone);
@@ -870,9 +869,9 @@ function checkInvoice(){
   function checkSocialSecurity(){
     if (/^(19|20)?(\d{6}([-+]|\s)\d{4}|(?!19|20)\d{10})$/.test(formOrderSocialSecurity.value)) {
       isSocialSecurity = true;
-      document.querySelector('.#socialError').innerHTML = ('');
+      document.querySelector('#socialError').innerHTML = ('');
     } else {
-      document.querySelector('#socialError').innerHTML = ('ange giltigt personnummer, 10 eller 12 siffror');
+      document.querySelector('#socialError').innerHTML = ('ange giltigt personnummer, <br> 10 eller 12 siffror.');
       isSocialSecurity = false;
       return;
     }
@@ -946,6 +945,7 @@ function checkFormValid() {
 /** ******************WRITE OUT FORM CONFIRMATION FUNCTION ******************** */
 
 function writeOutFormConfirmation() {
+  const formOrderFirstName = document.querySelector('#firstname').value;
   const formOrderAdress = document.querySelector('#adress').value;
   const formOrderZipcode = document.querySelector('#zipcode').value;
   const formOrderCity = document.querySelector('#city').value;
@@ -992,12 +992,16 @@ const resetBtn = document.querySelector('#reset');
 resetBtn.addEventListener('click', function resetForm() {
 
   const formInputs = document.querySelectorAll(
-    '#firstname, #lastname, #adress, #zipcode, #paymentOptions, #city, #portkod, #telephone, #email, #socialSecurity ');
+    '#firstname, #lastname, #adress, #zipcode, #paymentOptions, #city, #portkod, #telephone, #email, #socialSecurity, .error ');
   formInputs.forEach(input => {
     input.value = '';
   });
-  document.getElementById("gdpr").checked = true;
+  if (isGdpr = true) {
+    gdpr.checked = false;
+  } else {
+    gdpr.checked = true;
 
+  }
 });
 
 /** ****************** SORT-BY FUNCTIONS ************************************** */
