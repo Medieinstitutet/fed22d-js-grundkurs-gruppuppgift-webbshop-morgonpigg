@@ -839,7 +839,6 @@ function checkInvoice(){
     isDebitCredit = false;
   }
   checkFormValid();
-
   
   formOrderSocialSecurity.addEventListener('change', checkSocialSecurity);
 
@@ -872,7 +871,6 @@ function checkGdpr(){
   }
   checkFormValid();
 }
-
 
 // Function to check if all inputs are valid, make submit button enabled
 function checkFormValid() { 
