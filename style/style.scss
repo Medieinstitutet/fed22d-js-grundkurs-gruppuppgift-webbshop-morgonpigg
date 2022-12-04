@@ -1,0 +1,16 @@
+@import '_normalize.scss';
+
+$specialRed: #fa7070;
+$specialBeige: #fbf2cf;
+$specialLightGreen: #c6ebc5;
+$specialGreen: #a1c298;
+
+@mixin getCentered() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@import '_base.scss';
+@import '_tablet.scss';
+@import '_desktop.scss';
