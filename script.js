@@ -744,8 +744,10 @@ function invoicePaymentOpen(e) {
   }
 }
 
+//functions check inputs 
 function checkName() {
-  if ( /^[a-zåäöü\-.\s]{2,}$/i.test(formOrderFirstName.value)) {
+  const nameTrue = /^[a-zåäöü\-.\s]{2,}$/i.test(formOrderFirstName.value)
+  if (nameTrue) {
     isFirstname = true;
     document.querySelector('#nameError').innerHTML = ('');
   } else {
@@ -753,8 +755,6 @@ function checkName() {
     return;
   }
   checkFormValid();
-  console.log('namnet är', isFirstname);
-  console.log(formOrderFirstName.value);
 }
 
 function checkLastname() {
@@ -766,9 +766,6 @@ function checkLastname() {
     return;
   }
   checkFormValid();
-
-  console.log('efternamnet är', isLastname);
-  console.log(formOrderLastName.value);
 }
 
 function checkAdress() {
@@ -786,9 +783,6 @@ function checkAdress() {
     // adressError.innerHTML = ' ange gata och gatnummer.';
   }
   checkFormValid();
-
-  console.log('adress is', isLastname);
-  console.log(formOrderAdress.value);
 }
 
 function checkZip() {
@@ -801,9 +795,6 @@ function checkZip() {
     return;
   }
   checkFormValid();
-
-  console.log('zip är', isZipcode);
-  console.log(formOrderZipcode.value);
 }
 
 function checkCity() {
@@ -816,8 +807,6 @@ function checkCity() {
     return;
   }
   checkFormValid();
-  console.log('city är ', isCity);
-  console.log(formOrderCity.value);
 }
 
 function checkPhone() {
@@ -829,8 +818,6 @@ function checkPhone() {
     document.querySelector('#phoneError').innerHTML = ('ange giltigt mobilnummer.');
     return;
   }
-  console.log('phone is ', isPhone);
-  console.log(formOrderPhone.value);
   checkFormValid();
 }
 
@@ -843,8 +830,6 @@ function checkEmail() {
     document.querySelector('#emailError').innerHTML = ('ange giltig epostadress');
     return;
   }
-  console.log('email is ', isEmail);
-  console.log(formOrderEmail.value);
   checkFormValid();
 }
 
@@ -853,7 +838,6 @@ function checkInvoice(){
   if (isInvoice = true) {
     isDebitCredit = false;
   }
-  console.log(isInvoice);
   checkFormValid();
 
   
@@ -868,8 +852,6 @@ function checkInvoice(){
       isSocialSecurity = false;
       return;
     }
-    console.log('id is ', isSocialSecurity);
-    console.log(formOrderSocialSecurity.value);
     checkFormValid();
   } 
 }
@@ -879,8 +861,6 @@ function checkPaymentCredit(){
   if (isDebitCredit) {
     isInvoice = false;
   }
-
-  console.log(isDebitCredit);
   checkFormValid();
 }
 
@@ -890,16 +870,14 @@ function checkGdpr(){
   } else {
     isGdpr= false
   }
-  console.log(isGdpr);
   checkFormValid();
 }
 
 
 // Function to check if all inputs are valid, make submit button enabled
 function checkFormValid() { 
-  console.log(isInvoice && isSocialSecurity);
+
   submitBtn.addEventListener('click', specialDelivery);
-  (console.log(isGdpr))
   if ( isFirstname &&
      isLastname &&
      isAdress &&
@@ -910,7 +888,6 @@ function checkFormValid() {
      (isDebitCredit  || (isInvoice && isSocialSecurity)) &&
     isGdpr
   ) {
-    console.log('allt är sant')
     submitBtn.disabled = false;
   }
   else {
@@ -918,24 +895,7 @@ function checkFormValid() {
   }
 }
 
-// // Function to add error message to non-valid input
-// function addErrorMessage(e, string) {
-//   const getErrorMessage = e.target.parentElement.querySelector('.errorMessage');
-
-//   e.target.classList.add('error');
-
-//   const addParagraph = document.createElement('p');
-//   const addText = document.createTextNode(string);
-//   addParagraph.appendChild(addText);
-//   getErrorMessage.appendChild(addParagraph);
-// }
-
-// // Function to remove error message after input get valid
-// function removeError(e) {
-//   e.target.classList.remove('error');
-//   e.target.parentElement.querySelector('.errorMessage').innerHTML = '';
-// }
-/** ******************WRITE OUT FORM CONFIRMATION FUNCTION ******************** */
+/** ****************** WRITE OUT FORM CONFIRMATION FUNCTION ******************** */
 
 function writeOutFormConfirmation() {
   
@@ -981,15 +941,15 @@ const resetBtn = document.querySelector('#reset');
 resetBtn.addEventListener('click', function resetForm() {
 
   const formInputs = document.querySelectorAll(
-    '#firstname, #lastname, #adress, #zipcode, #city, #pCode, #telephone, #email, #socialSecurity, .error ');
+    '#firstname, #lastname, #adress, #zipcode, #city, #pCode, #telephone, #email, #socialSecurity ');
   formInputs.forEach(input => {
     input.value = '';
   });
-  if (isGdpr = true) {
-    gdpr.checked = false;
-  } else {
-    gdpr.checked = true;
-  }
+    if (isGdpr = true) {
+      gdpr.checked = false;
+    } else {
+      gdpr.checked = true;
+    }
 });
 
 /** ****************** SORT-BY FUNCTIONS ************************************** */
