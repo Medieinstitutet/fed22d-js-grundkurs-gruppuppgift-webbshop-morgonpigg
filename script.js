@@ -939,7 +939,7 @@ const resetBtn = document.querySelector('#reset');
 resetBtn.addEventListener('click', function resetForm() {
 
   const formInputs = document.querySelectorAll(
-    '#firstname, #lastname, #adress, #zipcode, #city, #pCode, #telephone, #email, #socialSecurity ');
+    '#firstname, #lastname, #adress, #zipcode, #city, #pCode, #telephone, #email, #socialSecurity, #cardNumber, #cardDate, #cardSecurity ');
   formInputs.forEach(input => {
     input.value = '';
   });
