@@ -40,7 +40,7 @@
   <body>
     <header class="allColorTheme">
       <div class="leftHeader">
-        <h1>Gottfrids Fantastiskt Goda Munkar</h1>
+        <h1>Gottfrids Goda Munkar</h1>
       </div>
       <div class="rightHeader">
         <nav id="nav">
@@ -120,26 +120,25 @@
 
         <div class="flexForm">
           <label>
-            <span class="errorMessage"></span>
-            <span>Förnamn:*</span><br />
-            <input type="text" id="firstname" name="firstname" required /><br />
+            <span>Förnamn:*</span><br>
+            <input type="text" id="firstname" name="firstname" required><br>
+            <span class="error" id="nameError"></span>
           </label>
 
           <label>
-            <span class="errorMessage"></span>
-            <span>Efternamn:*</span><br />
-            <input type="text" id="lastname" name="lastname" required /><br />
+            <span>Efternamn:*</span><br>
+            <input type="text" id="lastname" name="lastname" required><br>
+            <span class="error" id="lastnameError"></span>
           </label>
 
           <label>
-            <span class="errorMessage"></span>
-            <span>Adress(gata):*</span><br />
-            <input type="text" id="adress" name="adress" required /><br />
+            <span>Adress(gata):*</span><br>
+            <input type="text" id="adress" name="adress" required><br>
+            <span class="error" id="adressError"></span>
           </label>
 
           <label>
-            <span class="errorMessage"></span>
-            <span>Postnummer:*</span><br />
+            <span>Postnummer:*</span><br>
             <input
               type="text"
               id="zipcode"
@@ -148,31 +147,31 @@
               minlength="5"
               maxlength="5"
               required
-            /><br />
+            ><br>
+            <span class="error" id="zipError"></span>
           </label>
 
           <label>
-            <span class="errorMessage"></span>
-            <span>Postort:*</span><br />
-            <input type="text" id="city" name="city" required /><br />
+            <span>Postort:*</span><br>
+            <input type="text" id="city" name="city" required><br>
+            <span class="error" id="cityError"></span>
           </label>
 
           <label>
-            <span class="errorMessage"></span>
-            <span>Ev. portkod:</span><br />
-            <input type="text" id="portkod" name="portkod" /><br />
+            <span>Ev. portkod:</span><br>
+            <input type="text" id="pCode" name="portkod"><br>
           </label>
 
           <label>
-            <span class="errorMessage"></span>
-            <span>Telefon(mobil):*</span><br />
-            <input type="tel" id="telephone" name="telephone" required /><br />
+            <span>Telefon(mobil):*</span><br>
+            <input type="tel" id="telephone" name="telephone" required><br>
+            <span class="error" id="phoneError"></span>
           </label>
 
           <label>
-            <span class="errorMessage"></span>
-            <span>E-post:*</span><br />
-            <input type="email" id="email" name="email" placeholder="exempel@exempel.se" required /><br />
+            <span>E-post:*</span><br>
+            <input type="email" id="email" name="email" placeholder="exempel@exempel.se" required><br>
+            <span class="error" id="emailError"></span>
           </label>
         </div>
 
@@ -180,56 +179,56 @@
           <legend>Betalalternativ:*</legend>
 
           <label>
-            <input type="radio" name="paymentOptions" id="debitKredit" />
+            <input type="radio" name="paymentOptions" id="debitCredit">
             <span>Debit/Kreditkort</span>
           </label>
 
           <label>
-            <input type="radio" name="paymentOptions" id="invoice" />
+            <input type="radio" name="paymentOptions" id="invoice">
             <span>Faktura</span>
           </label>
 
           <div class="cardPayment">
             <label>
-              <span>Kortnummer:</span><br />
-              <input type="number" name="cardNumber" id="cardNumber" /><br />
+              <span>Kortnummer:</span><br>
+              <input type="number" name="cardNumber" id="cardNumber"><br>
             </label>
 
             <label>
-              <span>Datum/år:</span><br />
-              <input type="month" name="cardDate" id="cardDate" /><br />
+              <span>Datum/år:</span><br>
+              <input type="month" name="cardDate" id="cardDate"><br>
             </label>
 
             <label>
               <span>CVC:</span><br />
-              <input type="number" name="cardSecurity" id="cardSecurity" />
+              <input type="number" name="cardSecurity" id="cardSecurity">
             </label>
           </div>
 
-          <div class="fakturaPayment">
+          <div class="invoicePayment">
             <label>
-              <span class="errorMessage"></span>
-              <span>Personnummer:*</span><br />
+              <span>Personnummer:*</span><br>
               <input
                 type="text"
                 name="socialSecurity"
                 id="socialSecurity"
                 minlength="10"
-                maxlength="10"
+                maxlength="12"
                 placeholder="ÅÅMMDDXXXX"
-              />
+              ><br><br>
+              <span class="error" id="socialError"></span>
             </label>
           </div>
         </fieldset>
 
         <label>
-          <input type="checkbox" id="gdpr" name="gdpr" required />
-          <span>Godkännande för behandling av personuppgifter.*</span><br />
+          <input type="checkbox" id="gdpr" name="gdpr" required>
+          <span>Godkännande för behandling av personuppgifter.*</span><br>
         </label>
 
         <label>
-          <input type="checkbox" id="newsletter" name="newsletter" checked />
-          <span>Få vårat nyhetsbrev en gång i veckan för alla nyheter och erbjudanden.</span><br/>
+          <input type="checkbox" id="newsletter" name="newsletter" checked>
+          <span>Få vårat nyhetsbrev en gång i veckan för alla nyheter och erbjudanden.</span><br>
         </label>
         <input class="formBtn" type="submit" id="submit" value="Skicka order!" disabled>
       </form>
@@ -257,7 +256,6 @@
           <path
             style="fill: #f57847"
             d="M256,10.449C120.386,10.449,10.449,120.386,10.449,256S120.386,501.551,256,501.551
-
          S501.551,391.614,501.551,256S391.614,10.449,256,10.449z M256,322.872c-36.933,0-66.872-29.94-66.872-66.872
          c0-36.933,29.939-66.872,66.872-66.872s66.872,29.939,66.872,66.872S292.933,322.872,256,322.872z"
           />

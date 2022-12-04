@@ -165,11 +165,19 @@ const themeToggleCont = document.querySelector('#themeToggle');
 /** ****************** FORM VARIABLES ************************************** */
 
 // Form inputs
-const formOrderInputs = Array.from(document.querySelector('.formOrder').querySelectorAll('input'));
-const formOrderFirstName = document.querySelector('#firstname').value;
-const formOrderAdress = document.querySelector('#adress').value;
-const formOrderZipcode = document.querySelector('#zipcode').value;
-const formOrderCity = document.querySelector('#city').value;
+const submitBtn = document.querySelector('#submit');
+
+const formOrderFirstName = document.querySelector('#firstname');
+const formOrderLastName = document.querySelector('#lastname');
+const formOrderAdress = document.querySelector('#adress');
+const formOrderZipcode = document.querySelector('#zipcode');
+const formOrderCity = document.querySelector('#city');
+const formOrderPcode = document.querySelector('#pCode');
+const formOrderPhone = document.querySelector('#telephone');
+const formOrderEmail = document.querySelector('#email');
+const formOrderSocialSecurity = document.querySelector('#socialSecurity');
+const gdpr = document.querySelector('#gdpr');
+const newsletter = document.querySelector('#newsletter');
 
 const form = document.querySelector('#countDownClear');
 
@@ -184,12 +192,12 @@ const formOrder = document.querySelector('.formOrder');
 const formCloseBtn = document.querySelector('.formCloseBtnCnt');
 
 // Card/invoice buttons
-const cardRadio = document.querySelector('#debitKredit');
+const cardRadio = document.querySelector('#debitCredit');
 const invoiceRadio = document.querySelector('#invoice');
 
 // Card/invoice inputs
 const cardPayment = document.querySelector('.cardPayment');
-const fakturaPayment = document.querySelector('.fakturaPayment');
+const invoicePayment = document.querySelector('.invoicePayment');
 
 // Declare boolean variables for every validated input
 let isFirstname = false;
@@ -199,13 +207,14 @@ let isZipcode = false;
 let isCity = false;
 let isTelephone = false;
 let isEmail = false;
-let isDebitKredit = false;
+let isDebitCredit = false;
 let isInvoice = false;
 let isSocialSecurity = false;
 let isGdpr = false;
 
 // Declare variable for form confirmation
 const formConfirmation = document.querySelector('#orderConfirmation');
+
 // Declare a variable for random ordernumber
 const orderNumber = Math.round(Math.random() * 100000);
 
@@ -692,30 +701,23 @@ function coundownTimer() {
 }
 
 function resetTimer() {
-  form.innerHTML = `Var vänlig och fyll i fomuläret inom <span id="countdownTimer">15:00 minuter</span>.`;
+  form.innerHTML = `Var vänlig och fyll i formuläret inom <span id="countdownTimer">15:00 minuter</span>.`;
   totalSeconds = startingMinutes * 60;
   timerInterval = setInterval(coundownTimer, 1000);
 }
 
 // Function to start timer
 function clearForm() {
-  const fname = document.querySelector('#firstname');
-  const lname = document.querySelector('#lastname');
-  const adress = document.querySelector('#adress');
-  const zipcode = document.querySelector('#zipcode');
-  const city = document.querySelector('#city');
-  const pcode = document.querySelector('#portkod');
-  const telephone = document.querySelector('#telephone');
-  const email = document.querySelector('#email');
 
-  fname.value = '';
-  lname.value = '';
-  adress.value = '';
-  zipcode.value = '';
-  city.value = '';
-  pcode.value = '';
-  telephone.value = '';
-  email.value = '';
+  formOrderFirstName.value = '';
+  formOrderLastName.value = '';
+  formOrderAdress.value = '';
+  formOrderZipcode.value = '';
+  formOrderCity.value = '';
+  formOrderPcode.value = '';
+  formOrderPhone.value = '';
+  formOrderEmail.value = '';
+  formOrderSocialSecurity.value = '';
 
   // Writing out message when form is cleared
   form.innerHTML = `Det tog för lång tid att fylla i dina uppgifter, du har 15 minuter på dig!`;
@@ -730,153 +732,181 @@ function formOrderClose() {
 function cardPaymentOpen(e) {
   if (cardRadio.checked) {
     cardPayment.classList.add('paymentOpen');
-    fakturaPayment.classList.remove('paymentOpen');
+    invoicePayment.classList.remove('paymentOpen');
   }
 }
 
 // Open invoice payment option
-function fakturaPaymentOpen(e) {
+function invoicePaymentOpen(e) {
   if (invoiceRadio.checked) {
-    fakturaPayment.classList.add('paymentOpen');
+    invoicePayment.classList.add('paymentOpen');
     cardPayment.classList.remove('paymentOpen');
   }
 }
 
-// Function to check if specifik input is valid
-function checkInputNotEmpty(e) {
-  const getId = e.target.id;
-  const getValue = e.target.value;
-
-  if (getId == 'firstname' && getValue !== '') {
+//functions check inputs 
+function checkName() {
+  const nameTrue = /^[a-zåäöü\-.\s]{2,}$/i.test(formOrderFirstName.value)
+  if (nameTrue) {
     isFirstname = true;
-    removeError(e);
-  } else if (getId == 'firstname' && getValue == '') {
-    isFirstname = false;
-    addErrorMessage(e, 'Förnamn måste vara ifyllt.');
+    document.querySelector('#nameError').innerHTML = ('');
+  } else {
+      document.querySelector('#nameError').innerHTML = ('Fyll i ditt namn med bokstäver.');
+    return;
   }
-  if (getId == 'lastname' && getValue !== '') {
-    isLastname = true;
-    removeError(e);
-  } else if (getId == 'lastname' && getValue == '') {
-    isLastname = false;
-    addErrorMessage(e, 'Efternamn måste vara ifyllt.');
-  }
-  if (getId == 'adress' && getValue !== '') {
-    isAdress = true;
-    removeError(e);
-  } else if (getId == 'adress' && getValue == '') {
-    isAdress = false;
-    addErrorMessage(e, 'Adress måste vara ifyllt.');
-  }
-  if (getId == 'zipcode' && getValue !== '') {
-    isZipcode = true;
-    removeError(e);
-  } else if (getId == 'zipcode' && getValue == '') {
-    isZipcode = false;
-    addErrorMessage(e, 'Postnummer måste vara ifyllt.');
-  }
-  if (getId == 'city' && getValue !== '') {
-    isCity = true;
-    removeError(e);
-  } else if (getId == 'city' && getValue == '') {
-    isCity = false;
-    addErrorMessage(e, 'Postort måste vara ifyllt.');
-  }
-  if (getId == 'telephone' && getValue !== '') {
-    isTelephone = true;
-    removeError(e);
-  } else if (getId == 'telephone' && getValue == '') {
-    isTelephone = false;
-    addErrorMessage(e, 'Telefon måste vara ifyllt.');
-  }
-  if (getId == 'email' && getValue !== '') {
-    isEmail = true;
-    removeError(e);
-  } else if (getId == 'email' && getValue == '') {
-    isEmail = false;
-    addErrorMessage(e, 'E-post måste vara ifyllt.');
-  }
-  if (getId == 'debitKredit' && e.target.checked) {
-    isDebitKredit = true;
-    isInvoice = false;
-    document.querySelector('#socialSecurity').required = false;
-  }
-  if (getId == 'invoice' && e.target.checked) {
-    isInvoice = true;
-    isDebitKredit = false;
-    document.querySelector('#socialSecurity').required = true;
-  }
-  if (getId == 'socialSecurity' && !getValue == '') {
-    isSocialSecurity = true;
-    removeError(e);
-  } else if (getId == 'socialSecurity' && getValue == '') {
-    isSocialSecurity = false;
-    addErrorMessage(e, 'Personnummer måste vara ifyllt.');
-  }
-  if (getId == 'gdpr' && e.target.checked) {
-    isGdpr = true;
-  } else if (getId == 'gdpr' && !e.target.checked) {
-    isGdpr = false;
-  }
+  checkFormValid();
+}
 
+function checkLastname() {
+  if (/^[a-zåäöü\-.\s]{2,}$/i.test(formOrderLastName.value)) {
+    isLastname = true;
+    document.querySelector('#lastnameError').innerHTML = ('');
+  } else {
+    document.querySelector('#lastnameError').innerHTML = ('Fyll i ditt efternamn med bokstäver.');
+    return;
+  }
+  checkFormValid();
+}
+
+function checkAdress() {
+  if (
+    /^(^[a-zåäöA-ZÅÄÖ  *]*$)|(?:[A-ZÅÄÖ0-9]+\s)\d{1,}\s{0,7}(?:[A-ZÅÄÖ0-9#])|(?:[A-ZÅÄÖ]+\s){0,3}(?:[A-ZÅÄÖ]+)\s*\d{1,}$/i.test(
+      formOrderAdress.value
+    )
+  ) {
+    isAdress = true;
+    document.querySelector('#adressError').innerHTML = ('');
+  } else {
+    isAdress = false;
+    document.querySelector('#adressError').innerHTML = ('Fyll i giltig adress.');
+      return;
+    // adressError.innerHTML = ' ange gata och gatnummer.';
+  }
+  checkFormValid();
+}
+
+function checkZip() {
+  if (/^[0-9]{3}\s?[0-9]{2}\s?$/.test(formOrderZipcode.value)) {
+    isZipcode = true;
+    document.querySelector('#zipError').innerHTML = ('');
+  } else {
+    isZipcode = false;
+    document.querySelector('#zipError').innerHTML = ('ange postnummer som 5 siffror');
+    return;
+  }
+  checkFormValid();
+}
+
+function checkCity() {
+  if (/^[a-zåäöü\-.\s]{2,}$/i.test(formOrderCity.value)) {
+    isCity = true;
+    document.querySelector('#cityError').innerHTML = ('');
+  } else {
+    isCity = false;
+    document.querySelector('#cityError').innerHTML = ('ange postort med minst 2 bokstäver');
+    return;
+  }
+  checkFormValid();
+}
+
+function checkPhone() {
+  if (/^(\s*(7)|07)([0-9][ -]*){7}[0-9]$/.test(formOrderPhone.value)) {
+    isTelephone = true;
+    document.querySelector('#phoneError').innerHTML = ('');
+  } else {
+    isTelephone = false;
+    document.querySelector('#phoneError').innerHTML = ('ange giltigt mobilnummer.');
+    return;
+  }
+  checkFormValid();
+}
+
+function checkEmail() {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i.test(formOrderEmail.value)) {
+    isEmail = true;
+    document.querySelector('#emailError').innerHTML = ('');
+  } else {
+    isEmail = false;
+    document.querySelector('#emailError').innerHTML = ('ange giltig epostadress');
+    return;
+  }
+  checkFormValid();
+}
+
+function checkInvoice(){
+  isInvoice = true;
+  if (isInvoice = true) {
+    isDebitCredit = false;
+  }
+  checkFormValid();
+  
+  formOrderSocialSecurity.addEventListener('change', checkSocialSecurity);
+
+  function checkSocialSecurity(){
+    if (/^(19|20)?(\d{6}([-+]|\s)\d{4}|(?!19|20)\d{10})$/.test(formOrderSocialSecurity.value)) {
+      isSocialSecurity = true;
+      document.querySelector('#socialError').innerHTML = ('');
+    } else {
+      document.querySelector('#socialError').innerHTML = ('ange giltigt personnummer, <br> 10 eller 12 siffror.');
+      isSocialSecurity = false;
+      return;
+    }
+    checkFormValid();
+  } 
+}
+
+function checkPaymentCredit(){
+  isDebitCredit = true;
+  if (isDebitCredit) {
+    isInvoice = false;
+  }
+  checkFormValid();
+}
+
+function checkGdpr(){
+  if (gdpr.checked) {
+    isGdpr = true;
+  } else {
+    isGdpr= false
+  }
   checkFormValid();
 }
 
 // Function to check if all inputs are valid, make submit button enabled
-function checkFormValid() {
-  const submitBtn = document.querySelector('#submit');
-//  submitBtn.addEventListener('click', specialDelivery);
-  if (
-    isFirstname &&
-    isLastname &&
-    isAdress &&
-    isZipcode &&
-    isCity &&
-    isTelephone &&
-    isEmail &&
-    (isDebitKredit || (isInvoice && isSocialSecurity)) &&
+function checkFormValid() { 
+
+  submitBtn.addEventListener('click', specialDelivery);
+  if ( isFirstname &&
+     isLastname &&
+     isAdress &&
+     isZipcode &&
+     isCity &&
+     isTelephone &&
+     isEmail &&
+     (isDebitCredit  || (isInvoice && isSocialSecurity)) &&
     isGdpr
   ) {
     submitBtn.disabled = false;
-  } else {
+  }
+  else {
     submitBtn.disabled = true;
   }
 }
 
-// Function to add error message to non-valid input
-function addErrorMessage(e, string) {
-  const getErrorMessage = e.target.parentElement.querySelector('.errorMessage');
-
-  e.target.classList.add('error');
-
-  const addParagraph = document.createElement('p');
-  const addText = document.createTextNode(string);
-  addParagraph.appendChild(addText);
-  getErrorMessage.appendChild(addParagraph);
-}
-
-// Function to remove error message after input get valid
-function removeError(e) {
-  e.target.classList.remove('error');
-  e.target.parentElement.querySelector('.errorMessage').innerHTML = '';
-}
-/** ******************WRITE OUT FORM CONFIRMATION FUNCTION ******************** */
+/** ****************** WRITE OUT FORM CONFIRMATION FUNCTION ******************** */
 
 function writeOutFormConfirmation() {
-  const formOrderAdress = document.querySelector('#adress').value;
-  const formOrderZipcode = document.querySelector('#zipcode').value;
-  const formOrderCity = document.querySelector('#city').value;
   
   formConfirmation.innerHTML += `
     <div class="confirmContainer" id="confirmContainer">
     <h2>Orderbekräftelse</h2>
-    <h4>Tack för din order ${formOrderFirstName}!</h4>
+    <h4>Tack för din order ${formOrderFirstName.value}!</h4>
     <div>
         <p>Ordernummer: ${orderNumber}
         <p>Du har beställt:<span class="inhance"> ${total.amount} Stycken munkar</span><p>
         <p>Totalsumman för ordern är:<span class="inhance"> ${total.price} kr </span></p>
         <p>Fraktkostnaden landar på:<span class="inhance"> ${total.freight} kr </span></p>
-        <p>Beställningen kommer levereras till:<span class="inhance"> ${formOrderAdress} ${formOrderZipcode} ${formOrderCity}</span></p>
+        <p>Beställningen kommer levereras till:<span class="inhance"> ${formOrderAdress.value} ${formOrderZipcode.value} ${formOrderCity.value}</span></p>
         <p>${total.delivery}</p>
     </div>
       <button><a href=""index.html">Tillbaka till startsidan</a></button>
@@ -909,12 +939,15 @@ const resetBtn = document.querySelector('#reset');
 resetBtn.addEventListener('click', function resetForm() {
 
   const formInputs = document.querySelectorAll(
-    '#firstname, #lastname, #adress, #zipcode, #paymentOptions, #city, #portkod, #telephone, #email, #socialSecurity ');
+    '#firstname, #lastname, #adress, #zipcode, #city, #pCode, #telephone, #email, #socialSecurity, #cardNumber, #cardDate, #cardSecurity ');
   formInputs.forEach(input => {
     input.value = '';
   });
-  document.getElementById("gdpr").disabled = true;
-
+    if (isGdpr = true) {
+      gdpr.checked = false;
+    } else {
+      gdpr.checked = true;
+    }
 });
 
 /** ****************** SORT-BY FUNCTIONS ************************************** */
@@ -1057,12 +1090,23 @@ discountCodeBtn.addEventListener('click', superDiscountCode);
 formOpenBtn.addEventListener('click', formOrderOpen);
 formCloseBtn.addEventListener('click', formOrderClose);
 cardRadio.addEventListener('change', cardPaymentOpen);
-invoiceRadio.addEventListener('change', fakturaPaymentOpen);
+invoiceRadio.addEventListener('change', invoicePaymentOpen);
+
+formOrderFirstName.addEventListener('change', checkName);
+formOrderLastName.addEventListener('change', checkLastname);
+formOrderAdress.addEventListener('change', checkAdress);
+formOrderZipcode.addEventListener('change', checkZip);
+formOrderCity.addEventListener('change', checkCity);
+formOrderPhone.addEventListener('change', checkPhone);
+formOrderEmail.addEventListener('change', checkEmail);
+invoiceRadio.addEventListener('change', checkInvoice);
+cardRadio.addEventListener('change', checkPaymentCredit);
+gdpr.addEventListener('change', checkGdpr);
 
 // Form inputs, add event listeners
-for (let i = 0; i < formOrderInputs.length; i++) {
-  formOrderInputs[i].addEventListener('change', checkInputNotEmpty);
-}
+// for (let i = 0; i < formOrderInputs.length; i++) {
+//   formOrderInputs[i].addEventListener('change', checkInputNotEmpty);
+// }
 // Function-call higher donut price on weekend
 specialPriceWeekend();
 // Function-call to write out donuts

@@ -199,7 +199,7 @@ header {
   top: 5px;
 }
 
-/*************VARUKORG*************/
+/*************SHOPPING CART*************/
 
 #sectionShoppingCart {
   display: none;
@@ -464,7 +464,7 @@ header {
     }
   }
 }
-/*****SORTERA EFTER*********/
+/*****SORT BY*********/
 
 .sortProducts {
   padding-top: 20px;
@@ -532,12 +532,31 @@ header {
   z-index: 6;
 
   input {
-    margin: 5px 0;
+    margin: 5px 0 30px 0;
+    width: 90%;
   }
 
   fieldset {
     margin: 10px 0;
+
+    input {
+      margin: 5px 0;
+      width: auto;
+      }
+    .invoicePayment {
+      margin-bottom: 30px;
+    }
   }
+
+  .error {
+    position: absolute;
+    margin-top: -25px;
+    font-size: small;
+  }
+
+  #socialError {
+    margin-top: -20px;
+    }
 }
 
 .formOrderOpen {
@@ -591,7 +610,7 @@ form {
 }
 
 .cardPayment,
-.fakturaPayment {
+.invoicePayment {
   visibility: hidden;
   width: 1px;
   height: 1px;
@@ -603,16 +622,23 @@ form {
   width: auto;
 }
 
-.errorMessage {
+.error {
   color: red;
 
   p {
     margin: 0;
   }
 }
+
 input.error {
   border-color: red;
 }
+
+#gdpr, #newsletter {
+  margin: 5px 0 10px 0;
+  width: auto;
+}
+
 div.darkThemebg {
   background-color: #302f2a;
 }
@@ -656,12 +682,16 @@ div.orderConfirmation {
     }
   }
 }
+
 .formBtn{
   background-color: $specialGreen;
   padding: 10px;
   border: 2px solid $specialRed;
   box-shadow: 0 3px 15px rgba(0,0,0, 0.7);
   cursor: pointer;
+  width: 90%;
+  display:block;
+
   &:hover{
     background-color: $specialRed;
     border: 2px solid $specialGreen;
