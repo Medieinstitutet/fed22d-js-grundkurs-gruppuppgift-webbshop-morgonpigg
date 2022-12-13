@@ -544,7 +544,7 @@ function luciaSpecial() {
     if (addShopCartList.length > 0 && luciaIndex === -1) {
       addShopCartList.push({
         anyPrice: 0,
-        anyImg: 'img/donuts_img/white.jpg',
+        anyImg: 'img/donuts_img/lucia_donut.jpg',
         anyAlt: 'Luciamunk',
         anyName: 'Luciamunk',
         anyAmount: 1,
